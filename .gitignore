@@ -25,3 +25,14 @@ proguard/
 
 # Log Files
 *.log
+
+#IntelliJ Idea files
+/*/.idea/compiler.xml
+/*/.idea/encoding.xml
+/*/.idea/grade.xml
+/*/.idea/misc.xml
+/*/.idea/modules.xml
+/*/.idea/runConfiguration.xml
+/*/.idea/vcs.xml
+/*/*.iml
+/*/app/app.iml
