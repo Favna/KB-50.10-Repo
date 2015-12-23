@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">WorkSurge</string>
     <string name="action_settings">Settings</string>
+    <string name="txtSearchText">Enter search text</string>
+    <string name="btnSearchAction">Search</string>
     <string-array name="Radii">
         <item>10</item>
         <item>25</item>
