@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -17,6 +19,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Spinner radiiSpinner = createRadiiSpinner();
     }
 
     @Override
@@ -39,5 +42,18 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private Spinner createRadiiSpinner(){
+        //Create new Spinner object
+        Spinner spinner = (Spinner) findViewById(R.id.static_spinner);
+        //Create an ArrayAdapter for the items
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Radii, android.R.layout.simple_spinner_item);
+        //Specify the list when using
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        //return spinner
+        return spinner;
     }
 }
