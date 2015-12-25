@@ -4,10 +4,8 @@
     <string name="txtSearchText">Enter search text</string>
     <string name="btnSearchAction">Search</string>
     <string-array name="Radii">
+        <item>5</item>
         <item>10</item>
-        <item>25</item>
-        <item>50</item>
-        <item>75</item>
-        <item>100</item>
+        <item>20</item>
     </string-array>
 </resources>
