@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:text="@string/btnSearchAction"
         android:id="@+id/btnSearch"
+        android:onClick="foundVacanciesActivity"
         android:background="?attr/colorPrimary"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"

@@ -1,5 +1,7 @@
 package com.example.method.worksurge;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -55,5 +57,11 @@ public class SearchActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
         //return spinner
         return spinner;
+    }
+
+    // Go to foundVacanciesActivity.
+    public void foundVacanciesActivity(View v) {
+        Intent iFoundVacanciesActivity = new Intent(this, FoundVacanciesActivity.class);
+        startActivity(iFoundVacanciesActivity);
     }
 }
