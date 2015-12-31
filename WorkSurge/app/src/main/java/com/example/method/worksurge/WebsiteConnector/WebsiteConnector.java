@@ -19,67 +19,26 @@ public class WebsiteConnector {
      * and will send retrieved data to the parser.
      *
      */
-    private final String url = "http://www.nationalevacaturebank.nl/";
+    private String url = "http://www.nationalevacaturebank.nl/vacature/zoeken/overzicht/afstand/query//location/3066ga/output/html/items_per_page/50/page/1/ignore_ids";
     private WebsiteDataParser dataParser;
 
     public WebsiteConnector() {}
 
-    public void taskExecute() {
+    public void readWebsite(String searchCrit, int radius, String loc) {
+        //url = "http://www.nationalevacaturebank.nl/vacature/zoeken/overzicht/afstand/query//location/3066ga/output/html/items_per_page/50/page/1/ignore_ids";
 
-        TalkToServer myTask = new TalkToServer();
-        myTask.execute();
-    }
-
-    public void readWebsite() {
         try {
-            Document doc = Jsoup.connect("http://en.wikipedia.org/").get();
-            Elements newsHeadlines = doc.select("#mp-itn b a");
-
-            System.out.println(newsHeadlines.toString());
-
-
+            /*
+                TODO: Save cookie so we can continue.
+             */
+            Document doc = Jsoup.connect(url).get();
+            Elements newsHeadlines = doc.select(".resultlist-title");
+            System.out.println(doc.getAllElements());
         }
         catch (IOException exc) {
             System.out.println("ZEIKEN");
         }
         //return Jsoup.parse(url).text();
-    }
-
-    public class TalkToServer extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-        /*
-         *    do things before doInBackground() code runs
-         *    such as preparing and showing a Dialog or ProgressBar
-        */
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        /*
-         *    updating data
-         *    such a Dialog or ProgressBar
-        */
-
-        }
-
-
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            readWebsite();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-        /*
-         *    do something with data here
-         *    display it or send to mainactivity
-         *    close any dialogs/ProgressBars/etc...
-        */
-        }
-
     }
 
 }

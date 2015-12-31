@@ -13,9 +13,15 @@ import android.widget.Spinner;
 
 import com.example.method.worksurge.WebsiteConnector.WebsiteConnector;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
 public class SearchActivity extends AppCompatActivity {
 
     WebsiteConnector wc = null;
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -65,8 +71,27 @@ public class SearchActivity extends AppCompatActivity {
 
     // Go to foundVacanciesActivity.
     public void foundVacanciesActivity(View v) {
-        wc.taskExecute();
-        //Intent iFoundVacanciesActivity = new Intent(this, FoundVacanciesActivity.class);
-        //startActivity(iFoundVacanciesActivity);
+        // Can it be more clean / better?
+        final String searchCrit = ""; // SearchCriteria given by user
+        final int radius = 0; // KM radius, convert if non-standard
+        final String location = ""; // GPS Loc
+        final String activityChoice = "";
+
+        executorService.execute(new Runnable() {
+            public void run() {
+                wc.readWebsite(searchCrit, radius, location);
+            }
+        });
+        executorService.shutdown(); // Shutdown thread when done
+
+        // clicking twice invokes same thread twice, thread is already at work or never shut down gives an exception.
+        try {
+            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS); // Placeholder, show user the retrieval of data is taking time.
+
+        } catch (InterruptedException e) {
+
+        }
+        Intent iFoundVacanciesActivity = new Intent(this, FoundVacanciesActivity.class);
+        startActivity(iFoundVacanciesActivity);
     }
 }
