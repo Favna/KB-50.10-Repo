@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.method.worksurge.WebsiteConnector.WebsiteConnector;
 
@@ -72,8 +73,10 @@ public class SearchActivity extends AppCompatActivity {
     // Go to foundVacanciesActivity.
     public void foundVacanciesActivity(View v) {
         // Can it be more clean / better?
-        final String searchCrit = ""; // SearchCriteria given by user
-        final int radius = 0; // KM radius, convert if non-standard
+        TextView textSearchBox = (TextView) findViewById(R.id.txtSearchBox);
+        Spinner spinnerKm = (Spinner) findViewById(R.id.static_spinner);
+        final String searchCrit = textSearchBox.getText().toString(); // SearchCriteria given by user
+        final int radius = Integer.parseInt(spinnerKm.getSelectedItem().toString()); // KM radius, convert if non-standard
         final String location = ""; // GPS Loc
         final String activityChoice = "";
 
