@@ -40,11 +40,11 @@ public class WebsiteConnector {
             Document doc = Jsoup.connect(url_backup).get();
             Elements jobTitle = doc.select("ol.results>li h3 a");
             Elements jobUndertitle = doc.select("dl.meta");
-            Elements jobDetails = doc.select("ol.results>li .description");
+            Elements jobDetails = doc.select("ol.results>li .description"); // Currently does not work
             Elements jobUrl;
 
             List<String> jobsList = new ArrayList();
-            jobsList.add("Title: " + jobTitle.toString() + " Undertitle: " + jobUndertitle.toString() + " Details: ");
+            jobsList.add("Title: " + jobTitle.toString() + " Undertitle: " + jobUndertitle.toString() + " Details: " + jobDetails.toString());
             for(String E : jobsList)
             {
                 System.out.println(E);

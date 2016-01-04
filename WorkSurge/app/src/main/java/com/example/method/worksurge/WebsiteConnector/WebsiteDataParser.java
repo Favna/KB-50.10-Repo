@@ -13,4 +13,8 @@ public class WebsiteDataParser {
 
     public WebsiteDataParser() {}
 
+    public void stripHtmlTags(String line)
+    {
+        // Strip ALL html tags from any lines, and detect if any lines are empty so we delete those.
+    }
 }
