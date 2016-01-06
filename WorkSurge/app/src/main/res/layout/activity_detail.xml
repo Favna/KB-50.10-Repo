@@ -8,7 +8,7 @@
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="@string/name_activity_detail"
+        android:text="Detail Activity"
         android:id="@+id/txtView1"
         />
 
@@ -24,7 +24,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="@string/description_activity_detail"
+        android:text="Detail Activity"
         android:id="@+id/txtView3"
         />
 
