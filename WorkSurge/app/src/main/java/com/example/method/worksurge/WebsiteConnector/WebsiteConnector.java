@@ -2,6 +2,8 @@ package com.example.method.worksurge.WebsiteConnector;
 
 import android.os.AsyncTask;
 
+import com.example.method.worksurge.Model.VacancyModel;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -25,35 +27,47 @@ public class WebsiteConnector {
     private String url_backup = "https://www.randstad.nl/vacatures/?zoekterm=info&locatie=Rotterdam&afstand=10";
     private WebsiteDataParser dataParser;
 
-    public WebsiteConnector() {}
+    public WebsiteConnector() {
+        dataParser = new WebsiteDataParser();
+    }
+
+    private Document connect(String searchCrit, int radius, String loc)
+    {
+        // Set default if empty
+        if(radius == 0)
+            radius = 10;
+
+        try {
+            // Change url connection details
+
+            // Establish Connection
+            return Jsoup.connect(url_backup).get();
+        }
+        catch (IOException e) {
+            return null;
+        }
+    }
 
     public void readWebsite(String searchCrit, int radius, String loc) {
         //url = "http://www.nationalevacaturebank.nl/vacature/zoeken/overzicht/afstand/query//location/3066ga/output/html/items_per_page/50/page/1/ignore_ids";
+        Document doc = connect(searchCrit, radius, loc);
 
-        try {
-            /*
-                TODO: Save cookie so we can continue.
-             */
-            /*Document doc = Jsoup.connect(url).get();
-            Elements newsHeadlines = doc.select(".resultlist-title");
-            System.out.println(doc.getAllElements());*/
-            Document doc = Jsoup.connect(url_backup).get();
             Elements jobTitle = doc.select("ol.results>li h3 a");
             Elements jobUndertitle = doc.select("dl.meta");
             Elements jobDetails = doc.select("ol.results>li .description"); // Currently does not work
             Elements jobUrl;
 
-            List<String> jobsList = new ArrayList();
-            jobsList.add("Title: " + jobTitle.toString() + " Undertitle: " + jobUndertitle.toString() + " Details: " + jobDetails.toString());
-            for(String E : jobsList)
-            {
-                System.out.println(E);
-            }
+        List<String> jobsList = new ArrayList();
+
+        // Temp
+        for(int i = 0; i > jobTitle.size(); i++) {
+            jobsList.add("Title: " + jobTitle.get(i).toString() + " Undertitle: " + jobUndertitle.get(i).toString() + " Details: " + jobDetails.get(i).toString());
         }
-        catch (IOException exc) {
-            System.out.println("ZEIKEN");
-        }
-        //return Jsoup.parse(url).text();
+
+        // Temp
+        System.out.println("Size: " + jobsList.size());
+
+        dataParser.parseData(jobTitle, jobUndertitle, jobDetails);
     }
 
 }
