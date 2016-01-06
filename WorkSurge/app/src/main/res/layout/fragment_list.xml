@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/liv_vacancies"
         android:layout_gravity="left|top"
+        android:background="@drawable/gradient_default"
         android:choiceMode="singleChoice"
         android:smoothScrollbar="false" />
+
 </FrameLayout>

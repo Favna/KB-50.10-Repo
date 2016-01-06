@@ -32,11 +32,13 @@
 
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:id="@+id/txtSearch"
+        android:paddingLeft="10dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:background="@drawable/text_box"
         android:text="@string/txtSearchBox"
         android:inputType="text"
         android:layout_toLeftOf="@+id/btnSearch"

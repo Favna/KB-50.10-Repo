@@ -78,13 +78,13 @@ public class ListFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
-                    parent.getChildAt(position).setBackgroundColor(
+                    /*parent.getChildAt(position).setBackgroundColor(
                             Color.parseColor("#A9BCF5"));
 
                     if (save != -1 && save != position) {
                         parent.getChildAt(save).setBackgroundColor(
                                 Color.parseColor("#d6e6ff"));
-                    }
+                    }*/
 
                     save = position;
 
