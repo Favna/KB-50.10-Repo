@@ -4,10 +4,11 @@
     <!-- Search Activity -->
     <string name="txtSearchText">Enter search text</string>
     <string name="btnSearchAction">Search</string>
+    <string name="txtRadius">Choose a Radius</string>
     <string-array name="Radii">
-        <item>5</item>
-        <item>10</item>
-        <item>20</item>
+        <item>5 KM</item>
+        <item>10 KM</item>
+        <item>20 KM</item>
     </string-array>
     <string name="title_activity_found_vacancies">Found Vacancies</string>
 
