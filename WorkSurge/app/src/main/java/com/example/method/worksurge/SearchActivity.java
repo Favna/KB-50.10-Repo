@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.method.worksurge.Enum.IntentEnum;
 import com.example.method.worksurge.Model.VacancyModel;
 import com.example.method.worksurge.WebsiteConnector.WebsiteConnector;
 
@@ -121,7 +122,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 Intent iFoundVacanciesActivity = new Intent(context, FoundVacanciesActivity.class);
                 iFoundVacanciesActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                iFoundVacanciesActivity.putParcelableArrayListExtra("foundVacancies", (ArrayList < VacancyModel>) list);
+                iFoundVacanciesActivity.putParcelableArrayListExtra(IntentEnum.FOUND_VACANCY.toString(), (ArrayList <VacancyModel>) list);
                 context.startActivity(iFoundVacanciesActivity);
             }
             else

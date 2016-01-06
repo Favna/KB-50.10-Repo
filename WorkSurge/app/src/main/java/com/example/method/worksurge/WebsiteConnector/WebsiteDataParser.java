@@ -24,6 +24,9 @@ public class WebsiteDataParser {
 
     public List<VacancyModel> parseData(Elements jobTitle, Elements jobUndertitle, Elements jobDetails)
     {
+        if(jobTitle == null || jobUndertitle == null || jobDetails == null)
+            return null;
+
         List<String> title = stripHtmlTags(jobTitle);
         List<String> undertitle = stripHtmlTags(jobUndertitle);
         List<String> details = stripHtmlTags(jobDetails);
@@ -35,9 +38,10 @@ public class WebsiteDataParser {
         List<String> list = new ArrayList();
 
         // Strip ALL html tags from any lines, and detect if any lines are empty so we delete those.
-        for(int i = 0; i < elements.size(); i++)
+        for(int i = 0; i < elements.size(); i++) // TODO: Optimize?
         {
             list.add(elements.get(i).toString());
+            list.set(i, Jsoup.parse(list.get(i)).text().toString());
         }
 
         return list;

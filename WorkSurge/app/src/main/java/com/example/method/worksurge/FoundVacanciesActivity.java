@@ -12,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.method.worksurge.Enum.IntentEnum;
+import com.example.method.worksurge.Model.VacancyModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,7 @@ public class FoundVacanciesActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private ArrayList<VacancyModel> list = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,8 @@ public class FoundVacanciesActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        list = this.getIntent().getParcelableArrayListExtra(IntentEnum.FOUND_VACANCY.toString());
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -71,5 +77,9 @@ public class FoundVacanciesActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    public ArrayList<VacancyModel> getVacancyList() {
+        return this.list;
     }
 }

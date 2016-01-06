@@ -6,12 +6,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.method.worksurge.Model.VacancyModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,36 +49,55 @@ public class ListFragment extends Fragment {
     private void fillList() {
         liv_vacancy = (ListView) view.findViewById(R.id.liv_vacancies);
 
-        List<String> list = new ArrayList<String>();
-        list.add("test");
-        list.add("test2");
-        list.add("1");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, list);
+        ArrayList<VacancyModel> list = ((FoundVacanciesActivity) getActivity()).getVacancyList();
+        ArrayList<String> list_temp = new ArrayList<String>();
 
-        liv_vacancy.setAdapter(adapter);
-        liv_vacancy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        for(VacancyModel element : list)
+        {
+            list_temp.add(element.getTitle());
+        }
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                // TODO Auto-generated method stub
+        if(list != null)
+        {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, list_temp);
 
-                parent.getChildAt(position).setBackgroundColor(
-                        Color.parseColor("#A9BCF5"));
+            liv_vacancy.setAdapter(adapter);
 
-                if (save != -1 && save != position) {
-                    parent.getChildAt(save).setBackgroundColor(
-                            Color.parseColor("#d6e6ff"));
+            liv_vacancy.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
                 }
+            });
 
-                save = position;
+            liv_vacancy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                // ListView Clicked item index
-                int itemPosition = position;
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    parent.getChildAt(position).setBackgroundColor(
+                            Color.parseColor("#A9BCF5"));
 
-                // ListView Clicked item value
-                itemValue = (String) liv_vacancy.getItemAtPosition(position);
-            }
-        });
+                    if (save != -1 && save != position) {
+                        parent.getChildAt(save).setBackgroundColor(
+                                Color.parseColor("#d6e6ff"));
+                    }
+
+                    save = position;
+
+                    // ListView Clicked item index
+                    int itemPosition = position;
+
+                    // ListView Clicked item value
+                    itemValue = (String) liv_vacancy.getItemAtPosition(position);
+                }
+            });
+        }
+        else
+        {
+            Toast.makeText(view.getContext(), "An unexpected error prevented showing your information", Toast.LENGTH_LONG).show();
+        }
+
     }
 }

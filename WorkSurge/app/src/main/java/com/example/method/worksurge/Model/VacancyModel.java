@@ -91,4 +91,11 @@ public class VacancyModel implements Parcelable{
         dest.writeString (Details);
         dest.writeString (URL);
     }
+
+    public void readFromParcel(Parcel in) {
+        Title = in.readString();
+        Undertitle = in.readString();
+        Details = in.readString();
+        URL = in.readString();
+    }
 }
