@@ -13,8 +13,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.method.worksurge.Model.VacancyModel;
 import com.example.method.worksurge.WebsiteConnector.WebsiteConnector;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -80,6 +82,7 @@ public class SearchActivity extends AppCompatActivity {
         final int radius = Integer.parseInt(spinnerKm.getSelectedItem().toString()); // KM radius, convert if non-standard
         final String location = ""; // GPS Loc
         final String activityChoice = "";
+        List<VacancyModel> list = null;// temp
 
         executorService.execute(new Runnable() {
             public void run() {
@@ -96,6 +99,7 @@ public class SearchActivity extends AppCompatActivity {
 
         }
         Intent iFoundVacanciesActivity = new Intent(this, FoundVacanciesActivity.class);
+        iFoundVacanciesActivity.putExtra("foundVacancies", list.toArray());
         startActivity(iFoundVacanciesActivity);
     }
 }

@@ -22,23 +22,16 @@ public class WebsiteDataParser {
 
     public WebsiteDataParser() {}
 
-    public void parseData(Elements jobTitle, Elements jobUndertitle, Elements jobDetails)
+    public List<VacancyModel> parseData(Elements jobTitle, Elements jobUndertitle, Elements jobDetails)
     {
         List<String> title = stripHtmlTags(jobTitle);
         List<String> undertitle = stripHtmlTags(jobUndertitle);
         List<String> details = stripHtmlTags(jobDetails);
+        return attachToVacancyModelList(title, undertitle, details);
     }
 
     private List<String> stripHtmlTags(Elements elements)
     {
-        /*
-            In case Elements objects are of an uneven number, we have encountered an issue
-            The issue is that an element is missing something, this will jumble up all information
-            that we will print to the user. We need to know which vacancy is missing information so we
-            can fill the gip appropriatly. Currently it fills the gap with information from another
-            vacancy.
-         */
-
         List<String> list = new ArrayList();
 
         // Strip ALL html tags from any lines, and detect if any lines are empty so we delete those.
@@ -50,11 +43,25 @@ public class WebsiteDataParser {
         return list;
     }
 
-    public List<VacancyModel> attachToModelList(List<String> title, List<String> undertitle, List<String> details)
+    public List<VacancyModel> attachToVacancyModelList(List<String> title, List<String> undertitle, List<String> details)
     {
         List<VacancyModel> vacancyModel = null;
 
-        return null;
+        /*
+            In case Elements objects are of an uneven number, we have encountered an issue
+            The issue is that an element is missing something, this will jumble up all information
+            that we will print to the user. We need to know which vacancy is missing information so we
+            can fill the gip appropriatly. Currently it fills the gap with information from another
+            vacancy.
+         */
+        int min = determineSmallestSize(title, undertitle, details);
+
+        for(int i = 0; i > min; i++)
+        {
+            vacancyModel.add(attachToModel(title.get(i), undertitle.get(i), details.get(i)));
+        }
+
+        return vacancyModel;
     }
 
     private VacancyModel attachToModel(String title, String undertitle, String details)
@@ -69,7 +76,7 @@ public class WebsiteDataParser {
     }
 
     // temp
-    private int determineSmallestSize(Elements title, Elements undertitle, Elements details)
+    private int determineSmallestSize(List<String> title, List<String> undertitle, List<String> details)
     {
         int min = Math.min(Math.min(title.size(), undertitle.size()), details.size());
 

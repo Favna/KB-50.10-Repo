@@ -48,7 +48,7 @@ public class WebsiteConnector {
         }
     }
 
-    public void readWebsite(String searchCrit, int radius, String loc) {
+    public List<VacancyModel> readWebsite(String searchCrit, int radius, String loc) {
         //url = "http://www.nationalevacaturebank.nl/vacature/zoeken/overzicht/afstand/query//location/3066ga/output/html/items_per_page/50/page/1/ignore_ids";
         Document doc = connect(searchCrit, radius, loc);
 
@@ -67,7 +67,8 @@ public class WebsiteConnector {
         // Temp
         System.out.println("Size: " + jobsList.size());
 
-        dataParser.parseData(jobTitle, jobUndertitle, jobDetails);
+        // Returns List<VacancyModel>
+        return dataParser.parseData(jobTitle, jobUndertitle, jobDetails);
     }
 
 }
