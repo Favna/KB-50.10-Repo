@@ -35,7 +35,7 @@ public class WebsiteDataParser {
         List<String> list = new ArrayList();
 
         // Strip ALL html tags from any lines, and detect if any lines are empty so we delete those.
-        for(int i = 0; i > elements.size(); i++)
+        for(int i = 0; i < elements.size(); i++)
         {
             list.add(elements.get(i).toString());
         }
@@ -45,7 +45,7 @@ public class WebsiteDataParser {
 
     public List<VacancyModel> attachToVacancyModelList(List<String> title, List<String> undertitle, List<String> details)
     {
-        List<VacancyModel> vacancyModel = null;
+        List<VacancyModel> vacancyModel = new ArrayList();
 
         /*
             In case Elements objects are of an uneven number, we have encountered an issue
@@ -56,7 +56,7 @@ public class WebsiteDataParser {
          */
         int min = determineSmallestSize(title, undertitle, details);
 
-        for(int i = 0; i > min; i++)
+        for(int i = 0; i < min; i++)
         {
             vacancyModel.add(attachToModel(title.get(i), undertitle.get(i), details.get(i)));
         }
@@ -68,9 +68,9 @@ public class WebsiteDataParser {
     {
         VacancyModel model = new VacancyModel();
 
-        model.Title = title;
-        model.Undertitle = undertitle;
-        model.Details = details;
+        model.setTitle(title);
+        model.setUndertitle(undertitle);
+        model.setDetails(details);
 
         return model;
     }

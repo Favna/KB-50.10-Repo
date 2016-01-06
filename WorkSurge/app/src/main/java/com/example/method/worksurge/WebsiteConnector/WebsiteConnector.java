@@ -24,7 +24,7 @@ public class WebsiteConnector {
      *
      */
     private String url = "http://www.nationalevacaturebank.nl/vacature/zoeken/overzicht/afstand/query//location/3066ga/output/html/items_per_page/50/page/1/ignore_ids";
-    private String url_backup = "https://www.randstad.nl/vacatures/?zoekterm=info&locatie=Rotterdam&afstand=10";
+    private String url_backup = "https://www.randstad.nl/vacatures/?zoekterm=&locatie=Rotterdam&afstand=10"; // TODO: criteria
     private WebsiteDataParser dataParser;
 
     public WebsiteConnector() {
@@ -58,14 +58,6 @@ public class WebsiteConnector {
             Elements jobUrl;
 
         List<String> jobsList = new ArrayList();
-
-        // Temp
-        for(int i = 0; i > jobTitle.size(); i++) {
-            jobsList.add("Title: " + jobTitle.get(i).toString() + " Undertitle: " + jobUndertitle.get(i).toString() + " Details: " + jobDetails.get(i).toString());
-        }
-
-        // Temp
-        System.out.println("Size: " + jobsList.size());
 
         // Returns List<VacancyModel>
         return dataParser.parseData(jobTitle, jobUndertitle, jobDetails);
