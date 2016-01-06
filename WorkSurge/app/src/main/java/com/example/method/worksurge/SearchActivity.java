@@ -53,17 +53,19 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(item.getItemId())
+        {
+            case R.id.action_settings:
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                break;
+            case R.id.action_about:
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class)); // TODO: add about activity
+                break;
+            default:
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     private Spinner createRadiiSpinner(){
