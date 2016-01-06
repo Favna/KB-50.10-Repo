@@ -23,8 +23,8 @@ public class WebsiteConnector {
      * and will send retrieved data to the parser.
      *
      */
-    private String url = "http://www.nationalevacaturebank.nl/vacature/zoeken/overzicht/afstand/query//location/3066ga/output/html/items_per_page/50/page/1/ignore_ids";
-    private String url_backup = "https://www.randstad.nl/vacatures/?zoekterm=&locatie=Rotterdam&afstand=10"; // TODO: criteria
+    private String url = "https://www.randstad.nl/vacatures/?zoekterm=@search&locatie=@location&afstand=@distance";
+    private String url_backup = "https://www.randstad.nl/vacatures/?zoekterm=@search&locatie=@location&afstand=@distance"; // TODO: criteria
     private WebsiteDataParser dataParser;
 
     public WebsiteConnector() {
@@ -39,9 +39,17 @@ public class WebsiteConnector {
 
         try {
             // Change url connection details
+            url = url.replace("@search", searchCrit);
+            url = url.replace("@distance", Integer.toString(radius));
+            url = url.replace("@location", "Den+Haag");
+            System.out.println("S: " + searchCrit + " R: " + radius + "\n" + url);
 
             // Establish Connection
-            return Jsoup.connect(url_backup).get();
+            Document doc = Jsoup.connect(url).get();
+
+            url = url_backup;
+            // Return document
+            return doc;
         }
         catch (IOException e) {
             return null;

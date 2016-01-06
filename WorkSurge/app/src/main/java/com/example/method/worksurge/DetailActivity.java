@@ -44,6 +44,6 @@ public class DetailActivity extends AppCompatActivity {
 
     public void email(View v) {
         String temp_email = "test@test.nl";
-        Toast.makeText(getApplicationContext(), "Uw Email is verzonden naar: " + temp_email, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Your email has been sent to: " + temp_email, Toast.LENGTH_LONG).show();
     }
 }
