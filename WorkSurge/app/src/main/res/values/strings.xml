@@ -24,6 +24,8 @@
     <string name="txt_undertitle">Undertitle</string>
     <string name="txt_details">Details</string>
     <string name="txt_url">URL</string>
+    <string name="btn_call">Call Company</string>
+    <string name="btn_email">Email Yourself</string>
 
     <!-- ListFragment-->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -1,8 +1,12 @@
 package com.example.method.worksurge;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.method.worksurge.Enum.IntentEnum;
 import com.example.method.worksurge.Model.VacancyModel;
@@ -29,5 +33,17 @@ public class DetailActivity extends AppCompatActivity {
         title.setText(model.getTitle());
         undertitle.setText(model.getUndertitle());
         details.setText(model.getDetails());
+    }
+
+    public void call(View v) {
+        String temp_number = "06-22488840";
+        Intent intentCall = new Intent(Intent.ACTION_DIAL);
+        intentCall.setData(Uri.parse("tel:" + temp_number));
+        startActivity(intentCall);
+    }
+
+    public void email(View v) {
+        String temp_email = "test@test.nl";
+        Toast.makeText(getApplicationContext(), "Uw Email is verzonden naar: " + temp_email, Toast.LENGTH_LONG).show();
     }
 }
