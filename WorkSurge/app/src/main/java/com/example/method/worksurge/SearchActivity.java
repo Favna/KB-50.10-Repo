@@ -87,7 +87,7 @@ public class SearchActivity extends AppCompatActivity {
         // it be more clean / better?
         EditText textSearchBox = (EditText) findViewById(R.id.txtSearch);
         Spinner spinnerKm = (Spinner) findViewById(R.id.static_spinner);
-        int radius = Integer.parseInt(spinnerKm.getSelectedItem().toString()); // KM radius, convert if non-standard
+        int radius = Integer.parseInt(spinnerKm.getSelectedItem().toString().replaceAll("\\D+", "")); // KM radius, convert if non-standard
         String location = ""; // GPS Loc
         String activityChoice = "";
 
