@@ -8,31 +8,28 @@
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="Detail Activity"
-        android:id="@+id/txtView1"
-        />
-
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:gravity="center_horizontal"
+        android:background="@drawable/text_underline"
+        android:textSize="16dp"
+        android:textStyle="bold"
         android:layout_marginTop="15dp"
-        android:text="Dummy companyName."
-        android:id="@+id/txtView2"
+        android:text="@string/txt_title"
+        android:id="@+id/txtCustomTitle"
         />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Detail Activity"
-        android:id="@+id/txtView3"
+        android:text="@string/txt_undertitle"
+        android:id="@+id/txtCustomUndertitle"
         />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Dummy vacancyDescription"
-        android:id="@+id/txtView4"
+        android:text="@string/txt_details"
+        android:id="@+id/txtCustomDetails"
         />
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.method.worksurge;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.method.worksurge.Enum.IntentEnum;
 import com.example.method.worksurge.Model.VacancyModel;
 
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class ListFragment extends Fragment {
     private void fillList() {
         liv_vacancy = (ListView) view.findViewById(R.id.liv_vacancies);
 
-        ArrayList<VacancyModel> list = ((FoundVacanciesActivity) getActivity()).getVacancyList();
+        final ArrayList<VacancyModel> list = ((FoundVacanciesActivity) getActivity()).getVacancyList();
         ArrayList<String> list_temp = new ArrayList<String>();
 
         for(VacancyModel element : list)
@@ -91,6 +93,11 @@ public class ListFragment extends Fragment {
 
                     // ListView Clicked item value
                     itemValue = (String) liv_vacancy.getItemAtPosition(position);
+
+                    VacancyModel model = list.get(itemPosition);
+                    Intent iDetailActivity = new Intent(view.getContext(), DetailActivity.class);
+                    iDetailActivity.putExtra(IntentEnum.FOUND_SINGLE_VACANCY.toString(), model);
+                    view.getContext().startActivity(iDetailActivity);
                 }
             });
         }
@@ -98,6 +105,5 @@ public class ListFragment extends Fragment {
         {
             Toast.makeText(view.getContext(), "An unexpected error prevented showing your information", Toast.LENGTH_LONG).show();
         }
-
     }
 }

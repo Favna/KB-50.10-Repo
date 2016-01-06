@@ -122,7 +122,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 Intent iFoundVacanciesActivity = new Intent(context, FoundVacanciesActivity.class);
                 iFoundVacanciesActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                iFoundVacanciesActivity.putParcelableArrayListExtra(IntentEnum.FOUND_VACANCY.toString(), (ArrayList <VacancyModel>) list);
+                iFoundVacanciesActivity.putParcelableArrayListExtra(IntentEnum.FOUND_MULTIPLE_VACANCIES.toString(), (ArrayList <VacancyModel>) list);
                 context.startActivity(iFoundVacanciesActivity);
             }
             else

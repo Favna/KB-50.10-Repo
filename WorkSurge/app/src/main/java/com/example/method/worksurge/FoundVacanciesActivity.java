@@ -40,7 +40,7 @@ public class FoundVacanciesActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        list = this.getIntent().getParcelableArrayListExtra(IntentEnum.FOUND_VACANCY.toString());
+        list = this.getIntent().getParcelableArrayListExtra(IntentEnum.FOUND_MULTIPLE_VACANCIES.toString());
     }
 
     private void setupViewPager(ViewPager viewPager) {

@@ -1,4 +1,4 @@
-package com.example.method.worksurge;
+package com.example.method.worksurge.ContentProvider;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
