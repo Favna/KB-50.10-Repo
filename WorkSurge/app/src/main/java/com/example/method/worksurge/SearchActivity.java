@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -72,17 +73,17 @@ public class SearchActivity extends AppCompatActivity {
 
     // Go to foundVacanciesActivity.
     public void foundVacanciesActivity(View v) {
-        // Can it be more clean / better?
-        TextView textSearchBox = (TextView) findViewById(R.id.txtSearchBox);
+        // Can
+        // it be more clean / better?
+        final EditText textSearchBox = (EditText) findViewById(R.id.txtSearch);
         Spinner spinnerKm = (Spinner) findViewById(R.id.static_spinner);
-        final String searchCrit = textSearchBox.getText().toString(); // SearchCriteria given by user
         final int radius = Integer.parseInt(spinnerKm.getSelectedItem().toString()); // KM radius, convert if non-standard
         final String location = ""; // GPS Loc
         final String activityChoice = "";
 
         executorService.execute(new Runnable() {
             public void run() {
-                wc.readWebsite(searchCrit, radius, location);
+                wc.readWebsite((String) textSearchBox.toString(), radius, location);
             }
         });
         executorService.shutdown(); // Shutdown thread when done
