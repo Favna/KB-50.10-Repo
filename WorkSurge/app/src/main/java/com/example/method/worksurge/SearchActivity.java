@@ -2,7 +2,6 @@ package com.example.method.worksurge;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,29 +10,24 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.method.worksurge.Enum.FragmentEnum;
 import com.example.method.worksurge.Enum.IntentEnum;
 import com.example.method.worksurge.Model.VacancyModel;
 import com.example.method.worksurge.WebsiteConnector.WebsiteConnector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 public class SearchActivity extends AppCompatActivity {
 
     private WebsiteConnector wc = null;
+    private FragmentEnum chosen = FragmentEnum.LIST;
     protected List<VacancyModel> list = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -82,6 +76,18 @@ public class SearchActivity extends AppCompatActivity {
         return spinner;
     }
 
+    public void onClickList(View v)
+    {
+        chosen = FragmentEnum.LIST;
+        System.out.println("Chosen: List");
+    }
+
+    public void onClickMap(View v)
+    {
+        chosen = FragmentEnum.MAP;
+        System.out.println("Chosen: Map");
+    }
+
     // Go to foundVacanciesActivity.
     public void foundVacanciesActivity(View v) {
         // Can
@@ -122,7 +128,8 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 Intent iFoundVacanciesActivity = new Intent(context, FoundVacanciesActivity.class);
                 iFoundVacanciesActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                iFoundVacanciesActivity.putParcelableArrayListExtra(IntentEnum.FOUND_MULTIPLE_VACANCIES.toString(), (ArrayList <VacancyModel>) list);
+                iFoundVacanciesActivity.putParcelableArrayListExtra(IntentEnum.FOUND_MULTIPLE_VACANCIES.toString(), (ArrayList<VacancyModel>) list);
+                iFoundVacanciesActivity.putExtra(IntentEnum.DECISION.toString(), chosen);
                 context.startActivity(iFoundVacanciesActivity);
             }
             else

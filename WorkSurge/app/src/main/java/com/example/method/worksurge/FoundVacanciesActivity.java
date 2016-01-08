@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.method.worksurge.Enum.FragmentEnum;
 import com.example.method.worksurge.Enum.IntentEnum;
 import com.example.method.worksurge.Model.VacancyModel;
 
@@ -34,19 +35,28 @@ public class FoundVacanciesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // Set up tabs
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        // Handle Intent
         list = this.getIntent().getParcelableArrayListExtra(IntentEnum.FOUND_MULTIPLE_VACANCIES.toString());
+        FragmentEnum chosen = (FragmentEnum) this.getIntent().getSerializableExtra(IntentEnum.DECISION.toString());
+
+        // Set User's chosen preference
+        viewPager.setCurrentItem(chooseFragmentTitle(chosen));
     }
 
+    /*
+        ViewPager & FragmentPage adapters to make tabs work
+     */
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new ListFragment(), "List");
-        adapter.addFrag(new MapFragment(), "Map");
+        adapter.addFrag(new ListFragment(), chooseFragmentTitle(0));
+        adapter.addFrag(new MapFragment(), chooseFragmentTitle(1));
         viewPager.setAdapter(adapter);
     }
 
@@ -76,6 +86,32 @@ public class FoundVacanciesActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
+        }
+    }
+
+    private String chooseFragmentTitle(int num)
+    {
+        switch(num)
+        {
+            case 0:
+                return FragmentEnum.LIST.toString();
+            case 1:
+                return FragmentEnum.MAP.toString();
+            default:
+                return FragmentEnum.LIST.toString();
+        }
+    }
+
+    private int chooseFragmentTitle(FragmentEnum name)
+    {
+        switch(name)
+        {
+            case LIST:
+                return 0;
+            case MAP:
+                return 1;
+            default:
+                return 0;
         }
     }
 
