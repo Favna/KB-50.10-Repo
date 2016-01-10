@@ -62,13 +62,13 @@ public class WebsiteConnector {
 
             Elements jobTitle = doc.select("ol.results>li h3 a");
             Elements jobUndertitle = doc.select("dl.meta");
-            Elements jobDetails = doc.select("ol.results>li .description"); // Currently does not work
-            Elements jobUrl;
+            Elements jobDetails = doc.select("ol.results>li .description");
+            Elements jobUrl = doc.select(".jobboard h3>a");
 
         List<String> jobsList = new ArrayList();
 
         // Returns List<VacancyModel>
-        return dataParser.parseData(jobTitle, jobUndertitle, jobDetails);
+        return dataParser.parseData(jobTitle, jobUndertitle, jobDetails, jobUrl);
     }
 
 }

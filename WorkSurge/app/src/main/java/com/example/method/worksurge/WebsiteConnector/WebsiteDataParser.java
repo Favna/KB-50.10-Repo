@@ -22,15 +22,18 @@ public class WebsiteDataParser {
 
     public WebsiteDataParser() {}
 
-    public List<VacancyModel> parseData(Elements jobTitle, Elements jobUndertitle, Elements jobDetails)
+    public List<VacancyModel> parseData(Elements jobTitle, Elements jobUndertitle, Elements jobDetails, Elements jobUrl)
     {
-        if(jobTitle == null || jobUndertitle == null || jobDetails == null)
+        // TODO: Handle Null in WebsiteConnector
+        if(jobTitle == null || jobUndertitle == null || jobDetails == null || jobUrl == null)
             return null;
 
         List<String> title = stripHtmlTags(jobTitle);
         List<String> undertitle = stripHtmlTags(jobUndertitle);
         List<String> details = stripHtmlTags(jobDetails);
-        return attachToVacancyModelList(title, undertitle, details);
+        List<String> url = getHrefValue(jobUrl);
+
+        return attachToVacancyModelList(title, undertitle, details, url);
     }
 
     private List<String> stripHtmlTags(Elements elements)
@@ -47,7 +50,18 @@ public class WebsiteDataParser {
         return list;
     }
 
-    public List<VacancyModel> attachToVacancyModelList(List<String> title, List<String> undertitle, List<String> details)
+    public List<String> getHrefValue(Elements elements)
+    {
+        List<String> list = new ArrayList();
+
+        // Strip all tags except the href value
+        for (int i = 0; i < elements.size(); i++)
+            list.add("https://www.randstad.nl" + elements.get(i).attr("href"));
+
+        return list;
+    }
+
+    public List<VacancyModel> attachToVacancyModelList(List<String> title, List<String> undertitle, List<String> details, List<String> url)
     {
         List<VacancyModel> vacancyModel = new ArrayList();
 
@@ -58,23 +72,22 @@ public class WebsiteDataParser {
             can fill the gip appropriatly. Currently it fills the gap with information from another
             vacancy.
          */
-        int min = determineSmallestSize(title, undertitle, details);
+        int min = determineSmallestSize(title, undertitle, details); // TODO: Add url
 
         for(int i = 0; i < min; i++)
-        {
-            vacancyModel.add(attachToModel(title.get(i), undertitle.get(i), details.get(i)));
-        }
+            vacancyModel.add(attachToModel(title.get(i), undertitle.get(i), details.get(i), url.get(i)));
 
         return vacancyModel;
     }
 
-    private VacancyModel attachToModel(String title, String undertitle, String details)
+    private VacancyModel attachToModel(String title, String undertitle, String details, String url)
     {
         VacancyModel model = new VacancyModel();
 
         model.setTitle(title);
         model.setUndertitle(undertitle);
         model.setDetails(details);
+        model.setURL(url);
 
         return model;
     }
