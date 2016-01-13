@@ -1,4 +1,6 @@
 <resources>
+    <!-- DO NOT CHANGE -->
+    <string name="google_api_key">AIzaSyCdzD3kGCz6U4Fwg1pDXXPMKhgfgNV0eMY</string>
     <!-- General -->
     <string name="app_name">WorkSurge</string>
 
