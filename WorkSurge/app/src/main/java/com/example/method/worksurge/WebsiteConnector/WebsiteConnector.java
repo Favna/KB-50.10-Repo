@@ -1,7 +1,5 @@
 package com.example.method.worksurge.WebsiteConnector;
 
-import android.os.AsyncTask;
-
 import com.example.method.worksurge.Model.VacancyModel;
 
 import org.jsoup.Jsoup;
@@ -31,6 +29,19 @@ public class WebsiteConnector {
         dataParser = new WebsiteDataParser();
     }
 
+    private Document connect(String detailUrl)
+    {
+        try {
+            // Establish Connection
+            Document doc = Jsoup.connect(detailUrl).get();
+
+            // Return document
+            return doc;
+        }
+        catch (IOException e) {
+            return null;
+        }
+    }
     private Document connect(String searchCrit, int radius, String loc)
     {
         // Set default if empty
@@ -60,15 +71,30 @@ public class WebsiteConnector {
         //url = "http://www.nationalevacaturebank.nl/vacature/zoeken/overzicht/afstand/query//location/3066ga/output/html/items_per_page/50/page/1/ignore_ids";
         Document doc = connect(searchCrit, radius, loc);
 
-            Elements jobTitle = doc.select("ol.results>li h3 a");
-            Elements jobUndertitle = doc.select("dl.meta");
-            Elements jobDetails = doc.select("ol.results>li .description");
-            Elements jobUrl = doc.select(".jobboard h3>a");
+        Elements jobTitle = doc.select("ol.results>li h3 a");
+        Elements jobUndertitle = doc.select("dl.meta");
+        Elements jobDetails = doc.select("ol.results>li .description");
+        Elements jobUrl = doc.select(".jobboard h3>a");
 
         List<String> jobsList = new ArrayList();
 
         // Returns List<VacancyModel>
         return dataParser.parseData(jobTitle, jobUndertitle, jobDetails, jobUrl);
+    }
+
+    public List<VacancyModel> readWebsite(String urlDetail)
+    {
+        Document doc = connect(urlDetail);
+
+        Elements jobTitle = doc.select("ol.results>li h3 a");
+        Elements jobUndertitle = doc.select("dl.meta");
+        Elements jobDetails = doc.select("ol.results>li .description");
+        Elements jobCompany = doc.select("");
+
+        List<String> jobsList = new ArrayList();
+
+        // Returns List<VacancyModel>
+        return dataParser.parseData(jobTitle, jobUndertitle, jobDetails, jobCompany);
     }
 
 }
