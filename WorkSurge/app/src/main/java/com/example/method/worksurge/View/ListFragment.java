@@ -1,9 +1,6 @@
-package com.example.method.worksurge;
+package com.example.method.worksurge.View;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,14 +10,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.method.worksurge.Enum.IntentEnum;
 import com.example.method.worksurge.Model.VacancyModel;
+import com.example.method.worksurge.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListFragment extends Fragment {
     public ListFragment() {

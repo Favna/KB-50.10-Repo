@@ -1,4 +1,4 @@
-package com.example.method.worksurge;
+package com.example.method.worksurge.View;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.method.worksurge.Enum.IntentEnum;
 import com.example.method.worksurge.Model.VacancyModel;
+import com.example.method.worksurge.R;
 
 /**
  * Created by Nino on 4-1-2016.

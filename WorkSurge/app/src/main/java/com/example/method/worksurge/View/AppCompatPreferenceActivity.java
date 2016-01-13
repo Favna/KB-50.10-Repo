@@ -1,4 +1,4 @@
-package com.example.method.worksurge;
+package com.example.method.worksurge.View;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
