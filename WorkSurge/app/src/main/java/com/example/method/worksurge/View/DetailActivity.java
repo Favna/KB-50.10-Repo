@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.method.worksurge.Enum.IntentEnum;
+import com.example.method.worksurge.Model.VacancyDetailModel;
 import com.example.method.worksurge.Model.VacancyModel;
 import com.example.method.worksurge.R;
 
@@ -19,34 +21,39 @@ import com.example.method.worksurge.R;
  */
 public class DetailActivity extends AppCompatActivity {
 
-    private TextView title, undertitle, details, url;
+    private TextView title, meta, details, company;
+    private Button telefoon;
+    private VacancyDetailModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        setViewText((VacancyModel) getIntent().getParcelableExtra(IntentEnum.FOUND_SINGLE_VACANCY.toString()));
+        this.model = getIntent().getParcelableExtra(IntentEnum.FOUND_SINGLE_VACANCY.toString());
+        setViewText(this.model);
 
+        telefoon = (Button) findViewById(R.id.btn_call);
     }
 
-    private void setViewText(VacancyModel model) {
+    private void setViewText(VacancyDetailModel model) {
         this.title = (TextView) findViewById(R.id.txtCustomTitle);
-        this.undertitle = (TextView) findViewById(R.id.txtCustomUndertitle);
+        this.meta = (TextView) findViewById(R.id.txtCustomMeta);
         this.details = (TextView) findViewById(R.id.txtCustomDetails);
-        this.url = (TextView) findViewById(R.id.txtCustomUrl);
+        this.company = (TextView) findViewById(R.id.txtCustomCompany);
 
         this.title.setText(model.getTitle());
-        this.undertitle.setText(model.getUndertitle());
-        this.details.setText(model.getDetails());
-        this.url.setText(Html.fromHtml("<a href=\"" + model.getURL() + "\">" + model.getURL() + "</a>"));
-        this.url.setMovementMethod(LinkMovementMethod.getInstance());
+        this.meta.setText(model.getMeta().get(0)); // TODO: show all meta data
+        this.details.setText(model.getDetail());
+        this.company.setText(model.getCompany());
     }
 
     public void call(View v) {
-        String temp_number = "06-22488840";
+        if(model.getTelefoon().isEmpty())
+            telefoon.setEnabled(false);
+
         Intent intentCall = new Intent(Intent.ACTION_DIAL);
-        intentCall.setData(Uri.parse("tel:" + temp_number));
+        intentCall.setData(Uri.parse("tel:" + model.getTelefoon()));
         startActivity(intentCall);
     }
 
@@ -60,7 +67,7 @@ public class DetailActivity extends AppCompatActivity {
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "WorkSurge: " + title.getText());
-        emailIntent.putExtra(Intent.EXTRA_TEXT, url.getText());
+        emailIntent.putExtra(Intent.EXTRA_TEXT, model.getUrl());
 
         try {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));

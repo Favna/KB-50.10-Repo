@@ -33,7 +33,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:text="@string/txt_undertitle"
-        android:id="@+id/txtCustomUndertitle"
+        android:id="@+id/txtCustomMeta"
         />
 
     <TextView
@@ -52,8 +52,8 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
-        android:text="URLt"
-        android:id="@+id/txtCustomUrl" />
+        android:text="URL"
+        android:id="@+id/txtCustomCompany" />
 
     <TableRow
         android:layout_width="wrap_content"

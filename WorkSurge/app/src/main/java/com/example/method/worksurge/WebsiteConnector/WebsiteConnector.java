@@ -1,5 +1,6 @@
 package com.example.method.worksurge.WebsiteConnector;
 
+import com.example.method.worksurge.Model.VacancyDetailModel;
 import com.example.method.worksurge.Model.VacancyModel;
 
 import org.jsoup.Jsoup;
@@ -29,6 +30,7 @@ public class WebsiteConnector {
         dataParser = new WebsiteDataParser();
     }
 
+    // For Extra Detail
     private Document connect(String detailUrl)
     {
         try {
@@ -42,6 +44,7 @@ public class WebsiteConnector {
             return null;
         }
     }
+
     private Document connect(String searchCrit, int radius, String loc)
     {
         // Set default if empty
@@ -76,25 +79,22 @@ public class WebsiteConnector {
         Elements jobDetails = doc.select("ol.results>li .description");
         Elements jobUrl = doc.select(".jobboard h3>a");
 
-        List<String> jobsList = new ArrayList();
-
         // Returns List<VacancyModel>
         return dataParser.parseData(jobTitle, jobUndertitle, jobDetails, jobUrl);
     }
 
-    public List<VacancyModel> readWebsite(String urlDetail)
+    public VacancyDetailModel readWebsite(String urlDetail)
     {
         Document doc = connect(urlDetail);
 
-        Elements jobTitle = doc.select("ol.results>li h3 a");
-        Elements jobUndertitle = doc.select("dl.meta");
-        Elements jobDetails = doc.select("ol.results>li .description");
-        Elements jobCompany = doc.select("");
+        Elements jobTitle = doc.select(".content-wrapper>main.jobdetail h1");
+        Elements jobDetails = doc.select(".content-wrapper>main.jobdetail .content p");
+        Elements jobCompany = doc.select("dl.meta dd");
+        Elements jobMeta = doc.select("dl.meta");
+        Elements jobTelefoon = doc.select(".tel");
 
-        List<String> jobsList = new ArrayList();
-
-        // Returns List<VacancyModel>
-        return dataParser.parseData(jobTitle, jobUndertitle, jobDetails, jobCompany);
+        // Returns List<VacancyDetailModel>
+        return dataParser.parseData(jobTitle, jobDetails, jobCompany, jobMeta, jobTelefoon);
     }
 
 }
