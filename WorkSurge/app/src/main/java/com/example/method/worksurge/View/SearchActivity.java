@@ -55,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 break;
             case R.id.action_about:
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class)); // TODO: add about activity
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 break;
             case R.id.action_favorites:
                 startActivity(new Intent(getApplicationContext(), FavoriteActivity.class));

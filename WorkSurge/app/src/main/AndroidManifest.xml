@@ -38,9 +38,6 @@
             android:label="@string/title_activity_found_vacancies"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.SettingsActivity"
-            android:label="@string/title_activity_settings" />
-        <activity
             android:name=".View.DetailActivity"
             android:label="Details" />
         <activity
@@ -50,6 +47,10 @@
         <activity
             android:name=".View.AboutActivity"
             android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".View.SettingsActivity"
+            android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
