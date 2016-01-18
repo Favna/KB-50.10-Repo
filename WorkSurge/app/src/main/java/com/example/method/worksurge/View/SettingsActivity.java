@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.example.method.worksurge.R;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -28,6 +31,29 @@ public class SettingsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         txtEditor = (EditText)findViewById(R.id.TextEmail);
+        readEmailFile();
+    }
+
+    public void readEmailFile(){
+        try{
+            InputStream is = openFileInput(STOREEMAILTEXT);
+            if(is != null){
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader br = new BufferedReader(isr);
+                String str;
+                StringBuilder sb = new StringBuilder();
+                while((str = br.readLine()) != null){
+                    sb.append(str + "\n");
+                }
+                is.close();
+                txtEditor.setText(sb.toString());
+            }
+        }catch(java.io.FileNotFoundException fne){
+
+        }
+        catch(Throwable t){
+            Toast.makeText(this, "Exception"+ t.toString(),Toast.LENGTH_LONG);
+        }
     }
 
     public void saveEmail(View v){
