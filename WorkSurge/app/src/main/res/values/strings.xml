@@ -40,4 +40,9 @@
 
     <!-- Settings Activity -->
     <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Save Email Activity -->
+    <string name="title_activity_save_email">SaveEmailActivity</string>
+    <string name="filler_activity_save_email">Enter email addres</string>
+    <string name="btn_activity_save_email">Save</string>
 </resources>
