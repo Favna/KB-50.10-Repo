@@ -52,7 +52,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
-        android:text="@string/txtCompanyURL"
+        android:text="@string/txt_url"
         android:id="@+id/txtCustomCompany" />
 
     <TableRow
