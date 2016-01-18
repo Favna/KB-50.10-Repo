@@ -16,9 +16,6 @@ import com.example.method.worksurge.Model.VacancyDetailModel;
 import com.example.method.worksurge.Model.VacancyModel;
 import com.example.method.worksurge.R;
 
-/**
- * Created by Nino on 4-1-2016.
- */
 public class DetailActivity extends AppCompatActivity {
 
     private TextView title, meta, details, company;
@@ -77,5 +74,10 @@ public class DetailActivity extends AppCompatActivity {
         catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(DetailActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    //TODO: Working setFavorite function
+    public void setFavorite(View v) {
+
     }
 }

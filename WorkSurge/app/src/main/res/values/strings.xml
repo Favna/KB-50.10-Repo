@@ -40,4 +40,6 @@
 
     <!-- Settings Activity -->
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="btnFavorite">Favorite</string>
+    <string name="txtCompanyURL">URL</string>
 </resources>
