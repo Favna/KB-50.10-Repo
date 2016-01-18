@@ -42,15 +42,14 @@
     <!-- Settings Activity -->
     <string name="title_activity_settings">SettingsActivity</string>
 
-    <!-- Save Email Activity -->
-    <string name="title_activity_save_email">SaveEmailActivity</string>
-    <string name="filler_activity_save_email">Enter email addres</string>
-    <string name="btn_activity_save_email">Save</string>
-
-    <!-- Save View Prefenrence Activity -->
-    <string name="title_activity_save_view_preference">SaveViewPreferenceActivity</string>
-    <string name="filler_activity_save_view_preference">Pick a view preference</string>
-    <string name="radiobtn_activity_save_view_preference_map">map</string>
-    <string name="radiobtn_activity_save_view_preference_list">list</string>
-    <string name="btn_activity_save_view_preference_save">save preference</string>
+    <!-- setting Activity -->
+    <string name="title_save_email">SaveEmailActivity</string>
+    <string name="filler_save_email">Enter an email addres</string>
+    <string name="hint_save_email">email addres</string>
+    <string name="btn_save_email">Save</string>
+    <string name="title_save_view_preference">SaveViewPreferenceActivity</string>
+    <string name="filler_save_view_preference">Pick a view preference</string>
+    <string name="radiobtn_save_view_preference_map">map</string>
+    <string name="radiobtn_save_view_preference_list">list</string>
+    <string name="btn_save_view_preference_save">save preference</string>
 </resources>

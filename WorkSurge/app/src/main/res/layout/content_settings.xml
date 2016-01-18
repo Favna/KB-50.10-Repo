@@ -9,7 +9,68 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.method.worksurge.View.SettingsActivity"
+    tools:context=".View.SettingsActivity"
     tools:showIn="@layout/activity_settings">
+
+
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/filler_save_email"
+        />
+
+    <EditText
+        android:id="@+id/TextEmail"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lines = "1"
+        android:hint = "@string/hint_save_email"
+        android:layout_marginTop="30dp"/>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_save_email"
+        android:onClick="SaveEmail"
+        android:layout_marginTop="65dp"/>
+
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/filler_save_view_preference"
+        android:layout_marginTop="150dp"
+        />
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/radiobtngroupViewPreference"
+        android:layout_marginTop="180dp"
+        >
+        <RadioButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/map"
+            android:text="@string/radiobtn_save_view_preference_map" />
+
+        <RadioButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/list"
+            android:text="@string/radiobtn_save_view_preference_list" />
+    </RadioGroup>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveViewPreference"
+        android:onClick="saveViewPreference"
+        android:text="@string/btn_save_view_preference_save"
+        android:layout_marginTop="240dp"/>
 
 </RelativeLayout>
