@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".View.SettingsActivity"
+    tools:context = "com.example.method.worksurge.View.SettingsActivity"
     tools:showIn="@layout/activity_settings">
 
 
@@ -29,12 +29,18 @@
         android:hint = "@string/hint_save_email"
         android:layout_marginTop="30dp"/>
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id = "@+id/currentEmail"
+        android:layout_marginTop="120dp"/>
+
     <Button
         android:id="@+id/btnSave"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/btn_save_email"
-        android:onClick="SaveEmail"
+        android:onClick="saveEmail"
         android:layout_marginTop="65dp"/>
 
 
