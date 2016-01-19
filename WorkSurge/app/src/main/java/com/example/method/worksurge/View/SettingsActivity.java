@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.method.worksurge.R;
@@ -37,22 +38,24 @@ public class SettingsActivity extends AppCompatActivity {
     public void readEmailFile(){
         try{
             InputStream is = openFileInput(STOREEMAILTEXT);
+            TextView currentEmail = (TextView)findViewById(R.id.currentEmail);
             if(is != null){
                 InputStreamReader isr = new InputStreamReader(is);
                 BufferedReader br = new BufferedReader(isr);
-                String str;
+                String str = "";
                 StringBuilder sb = new StringBuilder();
                 while((str = br.readLine()) != null){
                     sb.append(str + "\n");
                 }
                 is.close();
-                txtEditor.setText(sb.toString());
+                currentEmail.setText(str);
+                Toast.makeText(this, "Email found", Toast.LENGTH_LONG).show();
             }
         }catch(java.io.FileNotFoundException fne){
-
+            Toast.makeText(this, "Email file not found",Toast.LENGTH_LONG).show();
         }
         catch(Throwable t){
-            Toast.makeText(this, "Exception"+ t.toString(),Toast.LENGTH_LONG);
+            Toast.makeText(this, "Exception"+ t.toString(),Toast.LENGTH_LONG).show();
         }
     }
 
