@@ -1,5 +1,7 @@
 package com.example.method.worksurge.View;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,10 +24,20 @@ public class DetailActivity extends AppCompatActivity {
     private Button telefoon;
     private VacancyDetailModel model;
 
+    //Database stuff for favorites
+    static final String PROVIDER_NAME = "com.example.method.worksurge.ContentProvider.FavoriteProvider";
+    static final String URL = "content://" + PROVIDER_NAME + "/favorite";
+    static final Uri CONTENT_URL = Uri.parse(URL);
+    ContentResolver resolver;
+    //End Database stuff for favorites
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        resolver = getContentResolver();
 
         this.model = getIntent().getParcelableExtra(IntentEnum.FOUND_SINGLE_VACANCY.toString());
         setViewText(this.model);
@@ -78,6 +90,15 @@ public class DetailActivity extends AppCompatActivity {
 
     //TODO: Working setFavorite function
     public void setFavorite(View v) {
+        ContentValues values = new ContentValues();
 
+        values.put("name", title.getText().toString());
+        values.put("details", details.getText().toString());
+        values.put("CompanyURL", "www.google.nl");
+        values.put("meta", meta.getText().toString());
+
+        resolver.insert(CONTENT_URL, values);
+
+        Toast.makeText(getApplicationContext(), "Favorite added", Toast.LENGTH_LONG).show();
     }
 }

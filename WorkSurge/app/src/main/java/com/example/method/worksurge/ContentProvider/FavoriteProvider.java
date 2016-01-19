@@ -14,18 +14,18 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
-public class CompanyProvider extends ContentProvider{
+public class FavoriteProvider extends ContentProvider {
 
-    static final String PROVIDER_NAME = "com.example.method.worksurge.ContentProvider.CompanyProvider";
+    static final String PROVIDER_NAME = "com.example.method.worksurge.ContentProvider.FavoriteProvider";
 
-    static final String URL = "content://" + PROVIDER_NAME + "/company";
+    static final String URL = "content://" + PROVIDER_NAME + "/favorite";
     static final Uri CONTENT_URL = Uri.parse(URL);
 
-    // TODO: Add Website URL
     static final String id = "id";
     static final String name = "name";
-    static final String information = "details";
-    static final String image = "image";
+    static final String details = "details";
+    static final String CompanyURL = "CompanyURL";
+    static final String meta = "meta";
     static final int uriCode = 1;
 
     private static HashMap<String, String> values;
@@ -35,19 +35,20 @@ public class CompanyProvider extends ContentProvider{
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, "company", uriCode);
+        uriMatcher.addURI(PROVIDER_NAME, "favorite", uriCode);
     }
 
     // TODO: Add Website URL
     private SQLiteDatabase sqlDB;
-    static final String DATABASE_NAME = "myCompany";
-    static final String TABLE_NAME = "names";
+    static final String DATABASE_NAME = "FavDB";
+    static final String TABLE_NAME = "favorites";
     static final int DATABASE_VERSION = 1;
     static final String CREATE_DB_TABLE = " CREATE TABLE " + TABLE_NAME
             + " (id INTEGER PRIMARY KEY AUTOINCREMENT, "
             + " name TEXT NOT NULL, "
             + " details TEXT NOT NULL, "
-            + " image TEXT NOT NULL);";
+            + " CompanyURL TEXT NOT NULL, "
+            + " meta TEXT NOT NULL);";
 
     @Override
     public boolean onCreate() {
@@ -116,7 +117,7 @@ public class CompanyProvider extends ContentProvider{
             getContext().getContentResolver().notifyChange(_uri, null);
             return _uri;
         }
-        Toast.makeText(getContext(), "Row Insert Failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Failed to save favorite", Toast.LENGTH_LONG).show();
         return null;
     }
 
@@ -175,5 +176,4 @@ public class CompanyProvider extends ContentProvider{
             onCreate(sqlDB);
         }
     }
-
 }
