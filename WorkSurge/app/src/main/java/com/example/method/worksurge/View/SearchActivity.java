@@ -1,5 +1,6 @@
 package com.example.method.worksurge.View;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -102,7 +103,7 @@ public class SearchActivity extends AppCompatActivity {
         String location = ""; // GPS Loc
         String activityChoice = "";
 
-        new ReadWebsiteAsync(this.getApplicationContext()).execute(
+        new ReadWebsiteAsync(this.getApplicationContext(), SearchActivity.this).execute(
                 new UserParam(textSearchBox.getText().toString(), radius, location)
         );
 
@@ -110,9 +111,11 @@ public class SearchActivity extends AppCompatActivity {
 
     private class ReadWebsiteAsync extends AsyncTask<UserParam, Void, Boolean> {
         private Context context;
+        private ProgressDialog dialog;
 
-        private ReadWebsiteAsync(Context context) {
+        private ReadWebsiteAsync(Context context, SearchActivity activity) {
             this.context = context;
+            dialog = new ProgressDialog(activity);
         }
 
         @Override
@@ -123,6 +126,9 @@ public class SearchActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            if(dialog.isShowing())
+                dialog.dismiss();
+
             if(result)
             {
                 if(list == null ? true : list.size() == 0)
@@ -144,7 +150,13 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPreExecute() {}
+        protected void onPreExecute() {
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage(getResources().getString(R.string.loading));
+            dialog.setIndeterminate(true);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+        }
 
         @Override
         protected void onProgressUpdate(Void... values) {}

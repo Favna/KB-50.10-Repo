@@ -1,5 +1,6 @@
 package com.example.method.worksurge.View;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -97,7 +98,7 @@ public class ListFragment extends Fragment {
                     itemValue = (String) liv_vacancy.getItemAtPosition(position);
 
                     wc = new WebsiteConnector();
-                    new ReadWebsiteAsync(view.getContext().getApplicationContext()).execute(
+                    new ReadWebsiteAsync(view.getContext().getApplicationContext(), ((FoundVacanciesActivity) getActivity())).execute(
                             list.get(itemPosition).getURL()
                     );
                 }
@@ -111,11 +112,13 @@ public class ListFragment extends Fragment {
 
     private class ReadWebsiteAsync extends AsyncTask<String, Void, Boolean> {
         private Context context;
+        private ProgressDialog dialog;
         private String[] params;
         private VacancyDetailModel model = new VacancyDetailModel();
 
-        private ReadWebsiteAsync(Context context) {
+        private ReadWebsiteAsync(Context context, FoundVacanciesActivity activity) {
             this.context = context;
+            this.dialog = new ProgressDialog(activity);
         }
 
         @Override
@@ -128,6 +131,9 @@ public class ListFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            if(dialog.isShowing())
+                dialog.dismiss();
+
             if(result)
             {
                 if(model != null ? model.getTitle().isEmpty() : false)
@@ -151,7 +157,13 @@ public class ListFragment extends Fragment {
         }
 
         @Override
-        protected void onPreExecute() {}
+        protected void onPreExecute() {
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage(getResources().getString(R.string.loading));
+            dialog.setIndeterminate(true);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+        }
 
         @Override
         protected void onProgressUpdate(Void... values) {}
