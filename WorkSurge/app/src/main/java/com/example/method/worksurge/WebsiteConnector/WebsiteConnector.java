@@ -1,5 +1,8 @@
 package com.example.method.worksurge.WebsiteConnector;
 
+import android.content.Context;
+import android.location.LocationManager;
+
 import com.example.method.worksurge.Model.VacancyDetailModel;
 import com.example.method.worksurge.Model.VacancyMapDetail;
 import com.example.method.worksurge.Model.VacancyModel;
@@ -77,14 +80,20 @@ public class WebsiteConnector {
         Document doc = connect(searchCrit, radius, loc, 0);
 
         Elements jobPagination = doc.select("ul.pagination-list li.last-short a");
-        String temp = dataParser.getHrefValue(jobPagination).get(0).toString();
-        int maxPage;
-        try {
-            maxPage = Integer.parseInt(temp.substring(temp.length() - 1));
-        }
-        catch (NumberFormatException e)
+        List<String> tempList = dataParser.getHrefValue(jobPagination);
+        int maxPage = 1;
+        if(tempList.size() > 0)
         {
-            maxPage = 1;
+            String temp = "";
+            temp = dataParser.getHrefValue(jobPagination).get(0).toString();
+            try {
+                maxPage = Integer.parseInt(temp.substring(temp.length() - 1));
+            }
+            catch (NumberFormatException e)
+            {
+                maxPage = 1;
+            }
+
         }
 
 
