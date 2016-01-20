@@ -106,7 +106,7 @@ public class ListFragment extends Fragment {
         }
         else
         {
-            Toast.makeText(view.getContext(), "An unexpected error prevented showing your information", Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(), getResources().getString(R.string.error_unexpected), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -138,7 +138,7 @@ public class ListFragment extends Fragment {
             {
                 if(model != null ? model.getTitle().isEmpty() : false)
                 {
-                    Toast.makeText(context, "Something went wrong with showing the vacancy...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, getResources().getString(R.string.error_unexpected), Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -151,7 +151,7 @@ public class ListFragment extends Fragment {
             }
             else
             {
-                Toast.makeText(context, "Couldn't connect to the online Database", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, getResources().getString(R.string.no_connection), Toast.LENGTH_LONG).show();
             }
 
         }

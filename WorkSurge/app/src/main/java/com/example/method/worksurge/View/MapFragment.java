@@ -1,38 +1,40 @@
 package com.example.method.worksurge.View;
 
 import android.content.Context;
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.Toast;
 
-import com.example.method.worksurge.Enum.IntentEnum;
 import com.example.method.worksurge.Model.VacancyDetailModel;
 import com.example.method.worksurge.Model.VacancyMapDetail;
-import com.example.method.worksurge.Model.VacancyModel;
 import com.example.method.worksurge.R;
 import com.example.method.worksurge.WebsiteConnector.WebsiteConnector;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements
+        OnMapReadyCallback,
+        OnInfoWindowClickListener {
 
     private View view;
     private WebsiteConnector wc;
@@ -50,12 +52,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.workSurgeGoogleMap);
 
-        if(mapFragment != null)
+        if(mapFragment != null) {
             mapFragment.getMapAsync(this);
-        else
-            Toast.makeText(getContext(), "Map was not properly initialized", Toast.LENGTH_SHORT).show();
-
-        init();
+            init();
+        } else {
+            Toast.makeText(getContext(), getResources().getString(R.string.map_not_initialized), Toast.LENGTH_SHORT).show();
+        }
 
         return view;
     }
@@ -64,8 +66,31 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         // Set google functions
         googleMap.setMyLocationEnabled(true);
-        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        googleMap.setOnInfoWindowClickListener(this);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
 
+        // Add Markers
+        addMarkers(googleMap);
+
+        // Position Camera
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(52.067075, 4.32), 13));
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(getContext(), "Info window clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    // Initialize
+    public void init()
+    {
+        wc = new WebsiteConnector();
+        new ReadWebsiteAsync(view.getContext().getApplicationContext()).execute();
+    }
+
+    private void addMarkers(GoogleMap googleMap)
+    {
         // Add Markers
         if(mapList != null)
         {
@@ -73,9 +98,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             {
                 LatLng latLng = convertAddressToLongAndLat(item.getAddress());
                 googleMap.addMarker(new MarkerOptions()
-                    .title(item.getVacancyModel().getTitle())
-                        .snippet(item.getVacancyModel().getUndertitle())
-                        .position(latLng)
+                                .title(item.getVacancyModel().getTitle())
+                                .snippet(item.getVacancyModel().getUndertitle())
+                                .position(latLng)
                 );
 
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
@@ -86,16 +111,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .title("Test")
                 .snippet("Testtest g rTest")
                 .position(new LatLng(52.067075, 4.32)));
-
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(52.067075, 4.32), 13));
     }
 
-    public void init()
-    {
-        wc = new WebsiteConnector();
-        new ReadWebsiteAsync(view.getContext().getApplicationContext()).execute();
-    }
-
+    // Convert Address to long and lat(Google: LatLng)
     private LatLng convertAddressToLongAndLat(String strAddress)
     {
         Geocoder geoCoder = new Geocoder(getContext());
@@ -138,7 +156,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         protected void onPostExecute(Boolean result) {
             if(!result)
             {
-                Toast.makeText(context, "Couldn't connect to the online Database", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, getResources().getString(R.string.no_connection), Toast.LENGTH_LONG).show();
             }
             else
             {

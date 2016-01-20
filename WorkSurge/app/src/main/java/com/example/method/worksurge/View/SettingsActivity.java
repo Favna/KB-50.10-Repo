@@ -76,7 +76,7 @@ public class SettingsActivity extends AppCompatActivity {
         try{
             OutputStreamWriter out = new OutputStreamWriter(openFileOutput(STOREVIEWTEXT, 0));
             out.write(rb.getText().toString());
-            Toast.makeText(this, "View preference is saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.saved_preference), Toast.LENGTH_SHORT).show();
         }catch(Throwable t){
             Toast.makeText(this, "Error"+t.toString(), Toast.LENGTH_LONG).show();
         }

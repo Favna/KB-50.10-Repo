@@ -84,13 +84,11 @@ public class SearchActivity extends AppCompatActivity {
     public void onClickList(View v)
     {
         chosen = FragmentEnum.LIST;
-        System.out.println("Chosen: List");
     }
 
     public void onClickMap(View v)
     {
         chosen = FragmentEnum.MAP;
-        System.out.println("Chosen: Map");
     }
 
     // Go to foundVacanciesActivity.
@@ -133,7 +131,7 @@ public class SearchActivity extends AppCompatActivity {
             {
                 if(list == null ? true : list.size() == 0)
                 {
-                    Toast.makeText(context, "No vacancies found!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, getResources().getString(R.string.no_vacancy), Toast.LENGTH_LONG).show();
                     return;
                 }
                 Intent iFoundVacanciesActivity = new Intent(context, FoundVacanciesActivity.class);
@@ -144,7 +142,7 @@ public class SearchActivity extends AppCompatActivity {
             }
             else
             {
-                Toast.makeText(context, "Couldn't connect to the online Database", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, getResources().getString(R.string.no_connection), Toast.LENGTH_LONG).show();
             }
 
         }

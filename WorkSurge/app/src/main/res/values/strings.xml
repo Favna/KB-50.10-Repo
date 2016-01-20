@@ -4,6 +4,11 @@
     <!-- General -->
     <string name="app_name">WorkSurge</string>
     <string name="loading">Loading. Please wait...</string>
+    <string name="no_record">No records found.</string>
+    <string name="no_connection">Could not connect to the online Datbase</string>
+    <string name="no_vacancy">No vacancies found!</string>
+    <string name="error_unexpected">Unexpected Error</string>
+
     <!-- Menu -->
     <string name="action_settings">Settings</string>
     <string name="action_favorites">Favorites</string>
@@ -29,10 +34,13 @@
     <string name="btn_call">Call Company</string>
     <string name="btn_email">Email Yourself</string>
     <string name="btnFavorite">Favorite</string>
+    <string name="add_favorite">Favorite Added</string>
 
-    <!-- ListFragment-->
+    <!-- List Fragment-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- Map Fragmnet -->
+    <string name="map_not_initialized">Could not load the map</string>
     <!-- Favorite Activity -->
     <string name="title_activity_favorite">FavoriteActivity</string>
 
@@ -41,8 +49,6 @@
 
     <!-- Settings Activity -->
     <string name="title_activity_settings">SettingsActivity</string>
-
-    <!-- setting Activity -->
     <string name="title_save_email">SaveEmailActivity</string>
     <string name="filler_save_email">Enter an email addres, if there is already an email addres it will show the email addres</string>
     <string name="hint_save_email">email addres</string>
@@ -52,4 +58,5 @@
     <string name="radiobtn_save_view_preference_map">map</string>
     <string name="radiobtn_save_view_preference_list">list</string>
     <string name="btn_save_view_preference_save">save preference</string>
+    <string name="saved_preference">Preference is saved</string>
 </resources>

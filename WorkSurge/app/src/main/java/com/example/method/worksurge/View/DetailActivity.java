@@ -99,6 +99,6 @@ public class DetailActivity extends AppCompatActivity {
 
         resolver.insert(CONTENT_URL, values);
 
-        Toast.makeText(getApplicationContext(), "Favorite added", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.add_favorite), Toast.LENGTH_LONG).show();
     }
 }

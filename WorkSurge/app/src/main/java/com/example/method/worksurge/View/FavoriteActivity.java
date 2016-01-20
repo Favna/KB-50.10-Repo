@@ -100,7 +100,7 @@ public class FavoriteActivity extends AppCompatActivity {
         List<String> favoriteListArray = new ArrayList<String>();
 
         if (cursor == null)
-            Toast.makeText(getApplicationContext(), "No records found", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_record), Toast.LENGTH_LONG).show();
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -120,7 +120,7 @@ public class FavoriteActivity extends AppCompatActivity {
     public void deleteFavorite() {
         long idDeleted = resolver.delete(CONTENT_URL, "id = ? ", new String[]{itemValue});
         getFavorites();
-        Toast.makeText(getApplicationContext(), "No records found!", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_record), Toast.LENGTH_LONG).show();
     }
 
 }
