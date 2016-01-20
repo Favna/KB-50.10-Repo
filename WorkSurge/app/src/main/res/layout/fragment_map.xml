@@ -5,11 +5,11 @@
     tools:context=".View.MapFragment">
 
     <fragment
-        tools:context="com.example.method.worksurge.View.Map"
+        tools:context="com.example.method.worksurge.View.SupportMapFragment"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/fragment"
+        android:id="@+id/workSurgeGoogleMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
