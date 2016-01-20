@@ -1,6 +1,7 @@
 package com.example.method.worksurge.WebsiteConnector;
 
 import com.example.method.worksurge.Model.VacancyDetailModel;
+import com.example.method.worksurge.Model.VacancyMapDetail;
 import com.example.method.worksurge.Model.VacancyModel;
 
 import org.jsoup.Jsoup;
@@ -95,6 +96,46 @@ public class WebsiteConnector {
 
         // Returns List<VacancyDetailModel>
         return dataParser.parseData(jobTitle, jobDetails, jobCompany, jobMeta, jobTelefoon);
+    }
+
+    public List<VacancyMapDetail> readWebsiteMap(List<VacancyModel> model)
+    {
+        List<VacancyMapDetail> list = new ArrayList<VacancyMapDetail>();
+        /*
+        for(VacancyModel item : model)
+        {
+            //Document doc = connect(item.getURL());
+            Document doc = connect("https://www.randstad.nl/vacatures/1710605/gave-bijbaan-als-meubel-verkoper%21");
+            if(doc != null)
+            {
+                if(doc.select(".street-address") != null)
+                {
+                    VacancyMapDetail tempMap = new VacancyMapDetail();
+                    tempMap.setVacancyDetailModel(item);
+                    tempMap.setAddress(dataParser.parseData(doc.select(".street-address")));
+                    list.add(tempMap);
+                }
+            }
+        }
+        */
+
+        //Document doc = connect(item.getURL());
+        Document doc = connect("https://www.randstad.nl/vacatures/1710605/gave-bijbaan-als-meubel-verkoper%21");
+        if(doc != null)
+        {
+            if(doc.select(".street-address") != null)
+            {
+                Elements tempEle = doc.select(".street-address");
+                String address = dataParser.parseData(tempEle);
+                VacancyMapDetail tempMap = new VacancyMapDetail();
+                tempMap.setVacancyDetailModel(model.get(0));
+                tempMap.setAddress(address);
+                list.add(tempMap);
+            }
+        }
+
+        // Returns List<VacancyMapDetail>
+        return list;
     }
 
 }

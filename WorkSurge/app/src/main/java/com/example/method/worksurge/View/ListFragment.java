@@ -45,7 +45,7 @@ public class ListFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        fillList(); // Test data
+        fillList();
 
         return view;
     }

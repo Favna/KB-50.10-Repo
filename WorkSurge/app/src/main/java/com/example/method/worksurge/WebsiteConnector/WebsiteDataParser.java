@@ -50,9 +50,20 @@ public class WebsiteDataParser {
         List<String> meta = stripHtmlTags(jobMeta);
         List<String> telefoon = stripHtmlTags(jobTelefoon);
 
-
-
         return attachToVacancyModelList(title, details, company, meta, telefoon);
+    }
+
+    // For Map Detail
+    public String parseData(Elements jobAddress)
+    {
+        // TODO: Handle Null in WebsiteConnector
+        if(jobAddress == null)
+            return null;
+
+        if(jobAddress.size() > 1 )
+            return null;
+
+        return stripHtmlTags(jobAddress.get(0).text().toString());
     }
 
     private List<String> stripHtmlTags(Elements elements)
@@ -67,6 +78,12 @@ public class WebsiteDataParser {
         }
 
         return list;
+    }
+
+    // Overloaded to return a single String element
+    private String stripHtmlTags(String element)
+    {
+        return Jsoup.parse(element).text().toString();
     }
 
     public List<String> getHrefValue(Elements elements)
