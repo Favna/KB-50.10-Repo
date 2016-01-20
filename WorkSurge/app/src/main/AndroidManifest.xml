@@ -45,10 +45,6 @@
             android:label="@string/title_activity_favorite"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.AboutActivity"
-            android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".View.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -58,6 +54,15 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <!-- Declare Provider -->
+        <!-- The Content Provider is declared -->
+        <provider
+            android:name=".ContentProvider.FavoriteProvider"
+            android:authorities="com.example.method.worksurge.ContentProvider.FavoriteProvider"
+            android:exported="true"
+            android:multiprocess="true" >
+        </provider>
 
     </application>
 
