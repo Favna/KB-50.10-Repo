@@ -5,7 +5,7 @@
     <string name="app_name">WorkSurge</string>
     <string name="loading">Loading. Please wait...</string>
     <string name="no_record">No records found.</string>
-    <string name="no_connection">Could not connect to the online Datbase</string>
+    <string name="no_connection">Could not connect to the online Database</string>
     <string name="no_vacancy">No vacancies found!</string>
     <string name="error_unexpected">Unexpected Error</string>
 

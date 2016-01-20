@@ -93,11 +93,14 @@ public class WebsiteConnector {
             {
                 maxPage = 1;
             }
-
         }
+        System.out.println("Max Page: " + maxPage);
+        // Limit amount of pages when our search criteria is empty
+        if(searchCrit.isEmpty())
+            maxPage = 2;
 
+        System.out.println("Max Page: " + maxPage);
 
-        System.out.println("MaxPage: " + maxPage);
         Elements jobTitle = null;
         Elements jobUndertitle = null;
         Elements jobDetails = null;
@@ -142,36 +145,23 @@ public class WebsiteConnector {
     public List<VacancyMapDetail> readWebsiteMap(List<VacancyModel> model)
     {
         List<VacancyMapDetail> list = new ArrayList<VacancyMapDetail>();
-        /*
+
         for(VacancyModel item : model)
         {
             //Document doc = connect(item.getURL());
-            Document doc = connect("https://www.randstad.nl/vacatures/1710605/gave-bijbaan-als-meubel-verkoper%21");
+            Document doc = connect(item.getURL());
             if(doc != null)
             {
-                if(doc.select(".street-address") != null)
+                Elements streetAddress = doc.select(".street-address");
+                if(!streetAddress.isEmpty())
                 {
+                    Elements tempEle = doc.select(".street-address");
+                    String address = dataParser.parseData(tempEle);
                     VacancyMapDetail tempMap = new VacancyMapDetail();
-                    tempMap.setVacancyDetailModel(item);
-                    tempMap.setAddress(dataParser.parseData(doc.select(".street-address")));
+                    tempMap.setVacancyDetailModel(model.get(0));
+                    tempMap.setAddress(address);
                     list.add(tempMap);
                 }
-            }
-        }
-        */
-
-        //Document doc = connect(item.getURL());
-        Document doc = connect("https://www.randstad.nl/vacatures/1710605/gave-bijbaan-als-meubel-verkoper%21");
-        if(doc != null)
-        {
-            if(doc.select(".street-address") != null)
-            {
-                Elements tempEle = doc.select(".street-address");
-                String address = dataParser.parseData(tempEle);
-                VacancyMapDetail tempMap = new VacancyMapDetail();
-                tempMap.setVacancyDetailModel(model.get(0));
-                tempMap.setAddress(address);
-                list.add(tempMap);
             }
         }
 

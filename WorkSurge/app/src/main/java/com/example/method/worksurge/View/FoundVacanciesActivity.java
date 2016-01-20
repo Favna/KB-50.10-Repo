@@ -1,6 +1,9 @@
 package com.example.method.worksurge.View;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -117,5 +120,12 @@ public class FoundVacanciesActivity extends AppCompatActivity {
 
     public ArrayList<VacancyModel> getVacancyList() {
         return this.list;
+    }
+
+    public boolean checkConnectivity()
+    {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
     }
 }

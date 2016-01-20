@@ -38,6 +38,7 @@ public class MapFragment extends Fragment implements
 
     private View view;
     private WebsiteConnector wc;
+    private GoogleMap googleMap;
     private List<VacancyMapDetail> mapList = new ArrayList<>();
     public MapFragment() {
         // Required empty public constructor
@@ -54,7 +55,6 @@ public class MapFragment extends Fragment implements
 
         if(mapFragment != null) {
             mapFragment.getMapAsync(this);
-            init();
         } else {
             Toast.makeText(getContext(), getResources().getString(R.string.map_not_initialized), Toast.LENGTH_SHORT).show();
         }
@@ -64,17 +64,17 @@ public class MapFragment extends Fragment implements
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
         // Set google functions
         googleMap.setMyLocationEnabled(true);
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         googleMap.setOnInfoWindowClickListener(this);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
 
-        // Add Markers
-        addMarkers(googleMap);
-
         // Position Camera
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(52.067075, 4.32), 13));
+
+        addMarkers(googleMap);
     }
 
     @Override
@@ -85,12 +85,22 @@ public class MapFragment extends Fragment implements
     // Initialize
     public void init()
     {
-        wc = new WebsiteConnector();
-        new ReadWebsiteAsync(view.getContext().getApplicationContext()).execute();
+        if(((FoundVacanciesActivity) getActivity()).checkConnectivity())
+        {
+            wc = new WebsiteConnector();
+            new ReadWebsiteAsync(view.getContext().getApplicationContext()).execute();
+        }
+        else
+        {
+            Toast.makeText(getContext(), getResources().getString(R.string.no_connection), Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void addMarkers(GoogleMap googleMap)
     {
+        init();
+
         // Add Markers
         if(mapList != null)
         {
@@ -148,7 +158,7 @@ public class MapFragment extends Fragment implements
         @Override
         protected Boolean doInBackground(String... params) {
             VacancyDetailModel test = new VacancyDetailModel();
-            model = wc.readWebsiteMap(((FoundVacanciesActivity) getActivity()).getVacancyList());
+            mapList = wc.readWebsiteMap(((FoundVacanciesActivity) getActivity()).getVacancyList());
             return true; // Return false if reading is unsuccesful
         }
 
@@ -160,7 +170,8 @@ public class MapFragment extends Fragment implements
             }
             else
             {
-                mapList = model; // unnecessary
+                // Add Markers
+                // addMarkers(googleMap);
             }
         }
 

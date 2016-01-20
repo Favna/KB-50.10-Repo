@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -104,16 +106,24 @@ public class SearchActivity extends AppCompatActivity {
     public void foundVacanciesActivity(View v) {
         // Can
         // it be more clean / better?
-        EditText textSearchBox = (EditText) findViewById(R.id.txtSearch);
-        LocationService locService = new LocationService(getApplicationContext());
-        Spinner spinnerKm = (Spinner) findViewById(R.id.static_spinner);
-        int radius = Integer.parseInt(spinnerKm.getSelectedItem().toString().replaceAll("\\D+", "")); // KM radius, convert if non-standard
-        String location = locService.getLocationAddress();
-        String activityChoice = "";
+        if(checkConnectivity())
+        {
+            EditText textSearchBox = (EditText) findViewById(R.id.txtSearch);
+            LocationService locService = new LocationService(getApplicationContext());
+            Spinner spinnerKm = (Spinner) findViewById(R.id.static_spinner);
+            int radius = Integer.parseInt(spinnerKm.getSelectedItem().toString().replaceAll("\\D+", "")); // KM radius, convert if non-standard
+            String location = locService.getLocationAddress();
+            String activityChoice = "";
 
-        new ReadWebsiteAsync(this.getApplicationContext(), SearchActivity.this).execute(
-                new UserParam(textSearchBox.getText().toString(), radius, location)
-        );
+            new ReadWebsiteAsync(this.getApplicationContext(), SearchActivity.this).execute(
+                    new UserParam(textSearchBox.getText().toString(), radius, location)
+            );
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_connection), Toast.LENGTH_LONG).show();
+        }
+
 
     }
 
@@ -135,6 +145,13 @@ public class SearchActivity extends AppCompatActivity {
         }catch(IOException fne) {
 
         }
+    }
+
+    private boolean checkConnectivity()
+    {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
     }
 
     private class ReadWebsiteAsync extends AsyncTask<UserParam, Void, Boolean> {

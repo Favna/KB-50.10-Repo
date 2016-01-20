@@ -97,10 +97,17 @@ public class ListFragment extends Fragment {
                     // ListView Clicked item value
                     itemValue = (String) liv_vacancy.getItemAtPosition(position);
 
-                    wc = new WebsiteConnector();
-                    new ReadWebsiteAsync(view.getContext().getApplicationContext(), ((FoundVacanciesActivity) getActivity())).execute(
-                            list.get(itemPosition).getURL()
-                    );
+                    if(((FoundVacanciesActivity) getActivity()).checkConnectivity())
+                    {
+                        wc = new WebsiteConnector();
+                        new ReadWebsiteAsync(view.getContext().getApplicationContext(), ((FoundVacanciesActivity) getActivity())).execute(
+                                list.get(itemPosition).getURL()
+                        );
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext(), getResources().getString(R.string.no_connection), Toast.LENGTH_LONG);
+                    }
                 }
             });
         }
