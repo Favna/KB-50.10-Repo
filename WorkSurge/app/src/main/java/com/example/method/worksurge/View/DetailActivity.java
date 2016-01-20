@@ -18,6 +18,12 @@ import com.example.method.worksurge.Model.VacancyDetailModel;
 import com.example.method.worksurge.Model.VacancyModel;
 import com.example.method.worksurge.R;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+
 public class DetailActivity extends AppCompatActivity {
 
     private TextView title, meta, details, company;
@@ -68,7 +74,7 @@ public class DetailActivity extends AppCompatActivity {
 
     // TODO: Send email on seperate thread
     public void email(View v) {
-        String[] TO = {"test@test.nl"}; // TODO: Retrieve user email
+        String[] TO = {getEmailFromFile()}; // TODO: Retrieve user email
         TextView title = (TextView) findViewById(R.id.txtCustomTitle);
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -86,6 +92,24 @@ public class DetailActivity extends AppCompatActivity {
         catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(DetailActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public String getEmailFromFile(){
+        String email = "";
+        StringBuffer sb = new StringBuffer();
+        try {
+            FileInputStream fis = openFileInput("storeEmailText.txt");
+            Reader r = new InputStreamReader(fis, "UTF-8");
+            int i = r.read();
+            while(i >= 0){
+                sb.append((char)i);
+                i = r.read();
+            }
+            email = sb.toString();
+            } catch (java.io.IOException e) {
+                e.printStackTrace();
+            }
+        return email;
     }
 
     //TODO: Working setFavorite function
