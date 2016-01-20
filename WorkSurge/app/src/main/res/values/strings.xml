@@ -3,6 +3,7 @@
     <string name="google_api_key">AIzaSyCdzD3kGCz6U4Fwg1pDXXPMKhgfgNV0eMY</string>
     <!-- General -->
     <string name="app_name">WorkSurge</string>
+    <string name="app_about">WorkSurge is an app that utilizes vacancy data on the internet to display to you via an easy to use list and map. Capabilities such as calling the company directly and emailing yourself the vacancy information for later. Favorite your jobs to see them later offline.</string>
     <string name="loading">Loading. Please wait...</string>
     <string name="no_record">No records found.</string>
     <string name="no_connection">Could not connect to the online Database</string>

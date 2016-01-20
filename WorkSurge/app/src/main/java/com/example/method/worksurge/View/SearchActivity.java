@@ -1,5 +1,6 @@
 package com.example.method.worksurge.View;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -67,7 +68,13 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 break;
             case R.id.action_about:
-                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                // startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+                dlgAlert.setMessage(getResources().getString(R.string.app_about));
+                dlgAlert.setTitle(getResources().getString(R.string.app_name));
+                dlgAlert.setPositiveButton("OK", null);
+                dlgAlert.setCancelable(true);
+                dlgAlert.create().show();
                 break;
             case R.id.action_favorites:
                 startActivity(new Intent(getApplicationContext(), FavoriteActivity.class));
