@@ -21,6 +21,10 @@ import com.example.method.worksurge.Model.VacancyModel;
 import com.example.method.worksurge.R;
 import com.example.method.worksurge.WebsiteConnector.WebsiteConnector;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +41,7 @@ public class SearchActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Spinner radiiSpinner = createRadiiSpinner();
-
+        readViewPreferenceFile();
         wc = new WebsiteConnector();
     }
 
@@ -107,6 +111,26 @@ public class SearchActivity extends AppCompatActivity {
                 new UserParam(textSearchBox.getText().toString(), radius, location)
         );
 
+    }
+
+    public void readViewPreferenceFile(){
+        try {
+            StringBuilder sb = new StringBuilder();
+            FileInputStream fis = openFileInput("storeViewText.txt");
+            Reader r = new InputStreamReader(fis, "UTF-8");
+            int i = r.read();
+            while(i >= 0){
+                sb.append((char)i);
+                i = r.read();
+            }
+            if(sb.toString().equalsIgnoreCase("map")){
+                chosen = FragmentEnum.MAP;
+            }else{
+                chosen = FragmentEnum.LIST;
+            }
+        }catch(IOException fne) {
+
+        }
     }
 
     private class ReadWebsiteAsync extends AsyncTask<UserParam, Void, Boolean> {
