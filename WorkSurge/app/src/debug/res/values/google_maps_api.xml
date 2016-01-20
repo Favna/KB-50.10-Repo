@@ -1,0 +1,7 @@
+<resources>
+    <!--
+    DO NOT CHANGE THE KEY. DO NOT TOUCH IT. DO NOT HOVER YOUR MOUSE OVER IT.
+    IT'S SACRED. ALL YOU DO IS LOOK, NOD, BOW AND MAKE A PRAYER TO GOOGLE AND THEIR INFINITE GRADLE.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCdzD3kGCz6U4Fwg1pDXXPMKhgfgNV0eMY</string>
+</resources>
