@@ -1,5 +1,6 @@
 package com.example.method.worksurge.View;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,9 +16,12 @@ import android.widget.Toast;
 import com.example.method.worksurge.R;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -37,20 +41,19 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void readEmailFile(){
         try{
-            InputStream is = openFileInput(STOREEMAILTEXT);
+            FileInputStream is = openFileInput(STOREEMAILTEXT);
             TextView currentEmail = (TextView)findViewById(R.id.currentEmail);
-            if(is != null){
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
-                String str = "";
-                StringBuilder sb = new StringBuilder();
-                while((str = br.readLine()) != null){
-                    sb.append(str + "\n");
-                }
-                is.close();
-                currentEmail.setText(str);
-                Toast.makeText(this, "Email found", Toast.LENGTH_LONG).show();
+            Reader r = new InputStreamReader(is, "UTF-8");
+            StringBuilder sb = new StringBuilder();
+            int i = r.read();
+            while(i >= 0){
+                sb.append((char)i);
+                i = r.read();
             }
+            is.close();
+            currentEmail.setText(sb);
+            Toast.makeText(this, "Email found", Toast.LENGTH_LONG).show();
+
         }catch(java.io.FileNotFoundException fne){
             Toast.makeText(this, "Email file not found",Toast.LENGTH_LONG).show();
         }
@@ -61,8 +64,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void saveEmail(View v){
         try{
-            OutputStreamWriter out = new OutputStreamWriter(openFileOutput(STOREEMAILTEXT, 0));
-            out.write(txtEditor.getText().toString());
+            FileOutputStream out = openFileOutput(STOREEMAILTEXT, Context.MODE_PRIVATE);
+            String str = txtEditor.getText().toString();
+            out.write(str.getBytes());
             Toast.makeText(this, "Email is saved", Toast.LENGTH_SHORT).show();
         }catch(Throwable t){
             Toast.makeText(this, "Error"+t.toString(), Toast.LENGTH_LONG).show();
@@ -74,9 +78,15 @@ public class SettingsActivity extends AppCompatActivity {
         int selected = rg.getCheckedRadioButtonId();
         RadioButton rb = (RadioButton)findViewById(selected);
         try{
-            OutputStreamWriter out = new OutputStreamWriter(openFileOutput(STOREVIEWTEXT, 0));
-            out.write(rb.getText().toString());
-            Toast.makeText(this, getResources().getString(R.string.saved_preference), Toast.LENGTH_SHORT).show();
+            FileOutputStream out = openFileOutput(STOREVIEWTEXT, Context.MODE_PRIVATE);
+            if(rb.getText().toString().equalsIgnoreCase("map")) {
+                String map = "map";
+                out.write(map.getBytes());
+            }else{
+                String list = "list";
+                out.write(list.getBytes());
+            }
+            Toast.makeText(this, "View preference is saved", Toast.LENGTH_SHORT).show();
         }catch(Throwable t){
             Toast.makeText(this, "Error"+t.toString(), Toast.LENGTH_LONG).show();
         }
