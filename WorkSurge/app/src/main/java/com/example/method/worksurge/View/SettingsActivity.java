@@ -63,13 +63,22 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void saveEmail(View v){
-        try{
-            FileOutputStream out = openFileOutput(STOREEMAILTEXT, Context.MODE_PRIVATE);
-            String str = txtEditor.getText().toString();
-            out.write(str.getBytes());
-            Toast.makeText(this, "Email is saved", Toast.LENGTH_SHORT).show();
-        }catch(Throwable t){
-            Toast.makeText(this, "Error"+t.toString(), Toast.LENGTH_LONG).show();
+        if(txtEditor.getText().toString().toLowerCase().matches("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
+        {
+            try{
+                FileOutputStream out = openFileOutput(STOREEMAILTEXT, Context.MODE_PRIVATE);
+                String str = txtEditor.getText().toString();
+                out.write(str.getBytes());
+                TextView currentEmail = (TextView) findViewById(R.id.currentEmail);
+                currentEmail.setText(str);
+                Toast.makeText(this, "Email is saved", Toast.LENGTH_SHORT).show();
+            }catch(Throwable t){
+                Toast.makeText(this, "Error"+t.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
         }
     }
 
