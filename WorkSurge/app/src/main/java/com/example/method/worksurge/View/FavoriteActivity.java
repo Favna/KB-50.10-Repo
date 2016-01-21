@@ -25,6 +25,7 @@ import java.util.List;
 public class FavoriteActivity extends AppCompatActivity {
     private ListView list;
     private TextView message;
+    private Cursor cursor;
     private int save = -1;
 
     //Database stuff for favorites
@@ -50,52 +51,47 @@ public class FavoriteActivity extends AppCompatActivity {
         message = (TextView) findViewById(R.id.txtMessage);
         message.setVisibility(View.GONE);
         // Retrieve DB content
-
-        // Check if content = 0
-
-        // Tell the user to favorite something
-     //   list.setVisibility(View.GONE);
-      //  message.setVisibility(View.VISIBLE);
-       // message.setText("Nothing to show! \n Please favorite something first.");
-
-        testMethod();
         getFavorites();
 
-     /*   LONG CLICK LISTERNER
-     list.setOnItemLongClickListener(new OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        if(cursor == null)
+        {
+            message.setVisibility(View.VISIBLE);
+            message.setText(getResources().getString(R.string.no_favorite));
+        }
+        else
+        {
+            message.setVisibility(View.GONE);
+        }
 
-                save = position;
+        list.setLongClickable(true);
 
-                //ListView Longclicked item index
-                int itemPosition = position;
+         list.setOnItemLongClickListener(new OnItemLongClickListener() {
+             @Override
+             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //ListView clicked item value
-                itemValue = (String) list.getItemAtPosition(position);
-                deleteFavorite();
+                 save = position;
 
-                return false;
-            }
-        });
-*/
-    }
+                 //ListView Longclicked item index
+                 int itemPosition = position;
 
-    private void testMethod() {
-        ContentValues values = new ContentValues();
+                 //ListView clicked item value
+                 itemValue = (String) list.getItemAtPosition(position);
 
-        values.put("name", "mooie naam");
-        values.put("details", "So detail");
-        values.put("CompanyURL", "www.google.nl");
-        values.put("meta", "This doge");
+                 // Retrieve ID
+                 if (itemValue.contains(" "))
+                     itemValue = itemValue.substring(0, itemValue.indexOf(" "));
 
-        resolver.insert(CONTENT_URL, values);
+                 deleteFavorite();
+
+                 return false;
+             }
+         });
     }
 
     public void getFavorites() {
-        String[] projection = new String[]{"name"};
+        String[] projection = new String[]{"id", "name"};
 
-        Cursor cursor = resolver.query(CONTENT_URL, projection, null, null, null);
+        cursor = resolver.query(CONTENT_URL, projection, null, null, null);
 
         List<String> favoriteListArray = new ArrayList<String>();
 
@@ -105,9 +101,10 @@ public class FavoriteActivity extends AppCompatActivity {
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
+                    String id = cursor.getString(cursor.getColumnIndex("id"));
                     String name = cursor.getString(cursor.getColumnIndex("name"));
 
-                    favoriteListArray.add(name + "\n");
+                    favoriteListArray.add(id + " " + name + "\n");
                 } while (cursor.moveToNext());
             }
         }

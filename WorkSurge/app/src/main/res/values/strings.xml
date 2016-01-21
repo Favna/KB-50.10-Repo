@@ -1,6 +1,7 @@
 <resources>
     <!-- DO NOT CHANGE -->
     <string name="google_api_key">AIzaSyCdzD3kGCz6U4Fwg1pDXXPMKhgfgNV0eMY</string>
+
     <!-- General -->
     <string name="app_name">WorkSurge</string>
     <string name="app_about">WorkSurge is an app that utilizes vacancy data on the internet to display to you via an easy to use list and map. Capabilities such as calling the company directly and emailing yourself the vacancy information for later. Favorite your jobs to see them later offline.</string>
@@ -42,9 +43,10 @@
 
     <!-- Map Fragmnet -->
     <string name="map_not_initialized">Could not load the map</string>
+
     <!-- Favorite Activity -->
     <string name="title_activity_favorite">FavoriteActivity</string>
-
+    <string name="no_favorite">Nothing to show! \n Please favorite something first.</string>
     <!-- About Activity -->
     <string name="title_activity_about">AboutActivity</string>
 
@@ -60,4 +62,5 @@
     <string name="radiobtn_save_view_preference_list">List</string>
     <string name="btn_save_view_preference_save">Save Preference</string>
     <string name="saved_preference">Preference is saved</string>
+
 </resources>
