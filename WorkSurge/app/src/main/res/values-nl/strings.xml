@@ -1,2 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <!-- DO NOT CHANGE -->
+    <string name="google_api_key">AIzaSyCdzD3kGCz6U4Fwg1pDXXPMKhgfgNV0eMY</string>
+
+        <!-- General -->
+    <string name="app_name">WorkSurge</string>
+    <string name="app_about">WorkSurge is an app that utilizes vacancy data on the internet to display to you via an easy to use list and map. Capabilities such as calling the company directly and emailing yourself the vacancy information for later. Favorite your jobs to see them later offline.</string>
+    <string name="loading">Laden. Wacht AUB...</string>
+    <string name="no_record">Geen gegevens gevonden.</string>
+    <string name="no_connection">Geen connectie via internet mogelijk</string>
+    <string name="no_vacancy">Geen vacatures gevonden</string>
+    <string name="error_unexpected">Onverwachte Fout</string>
+
+        <!-- Menu -->
+    <string name="action_settings">Instellingen</string>
+    <string name="action_favorites">Favorieten</string>
+    <string name="action_about">Over de App</string>
+
+        <!-- Search Activity -->
+    <string name="txtSearchText">Vul zoek tekst in</string>
+    <string name="txtSearchBox">Vul zoek tekst in</string>
+    <string name="btnSearchAction">Zoek</string>
+    <string name="txtRadius">Kies een radius</string>
+    <string-array name="Radii">
+    <item>5 KM</item>
+    <item>10 KM</item>
+    <item>20 KM</item>
+    </string-array>
+
+    <!-- Found Vacancies -->
+    <string name="title_activity_found_vacancies">Gevonden Vacatures</string>
+
+        <!-- DetailActivity -->
+    <string name="txt_title">Titel</string>
+    <string name="txt_undertitle">Ondertitel</string>
+    <string name="txt_details">Details</string>
+    <string name="txt_url">URL</string>
+    <string name="btn_call">Bel Bedrijf</string>
+    <string name="btn_email">Email Jezelf</string>
+    <string name="btnFavorite">Favoriet</string>
+    <string name="add_favorite">Favoriet toegevoegt</string>
+
+        <!-- List Fragment-->
+    <string name="hello_blank_fragment">hallo blank fragment</string>
+
+        <!-- Map Fragmnet -->
+    <string name="map_not_initialized">Map kon niet worden geladen</string>
+
+        <!-- Favorite Activity -->
+    <string name="title_activity_favorite">Favorieten</string>
+    <string name="no_favorite">Niks te laten zien! \n Maak een vacature je favoriet.</string>
+    <string name="delete">Verwijderen</string>
+    <string name="item_deleted">Favoriet Verwijdert</string>
+
+        <!-- About Activity -->
+    <string name="title_activity_about">About Activity</string>
+
+        <!-- Settings Activity -->
+    <string name="title_activity_settings">Settings Activity</string>
+    <string name="title_save_email">SaveEmailActivity</string>
+    <string name="filler_save_email">Vul een email in, als er al een email is dan laat de app je jouw email zien.</string>
+    <string name="hint_save_email">Email Adres</string>
+    <string name="btn_save_email">Email opslaan</string>
+    <string name="invalid_email">Invalide Email</string>
+    <string name="title_save_view_preference">SaveViewPreferenceActivity</string>
+    <string name="filler_save_view_preference">Kies een view voorkeur</string>
+    <string name="radiobtn_save_view_preference_map">Map</string>
+    <string name="radiobtn_save_view_preference_list">Lijst</string>
+    <string name="btn_save_view_preference_save">Opslaan Voorkeur</string>
+    <string name="saved_preference">Voorkeur is opgeslagen</string>
+</resources>
