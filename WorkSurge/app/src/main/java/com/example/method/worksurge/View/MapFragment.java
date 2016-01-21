@@ -1,9 +1,13 @@
 package com.example.method.worksurge.View;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +26,8 @@ import com.example.method.worksurge.Model.VacancyDetailModel;
 import com.example.method.worksurge.Model.VacancyMapDetail;
 import com.example.method.worksurge.R;
 import com.example.method.worksurge.WebsiteConnector.WebsiteConnector;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,7 +43,8 @@ import java.util.List;
 
 public class MapFragment extends Fragment implements
         OnMapReadyCallback,
-        OnInfoWindowClickListener {
+        OnInfoWindowClickListener,
+        GoogleMap.OnMyLocationButtonClickListener {
 
     private View view;
     private WebsiteConnector wc;
@@ -75,21 +82,14 @@ public class MapFragment extends Fragment implements
         googleMap.getUiSettings().setZoomControlsEnabled(true);
 
         // Position Camera
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(52.067075, 4.32), 13));
+        // googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(52.067075, 4.32), 13));
 
         addMarkers(googleMap);
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        for(int i = 0; i < mapList.size(); i++)
-        {
-            if(mapList.get(i).getVacancyModel().getUndertitle().equals(marker.getSnippet()) && mapList.get(i).getVacancyModel().getTitle().equals(marker.getTitle())
-                    && !mapList.get(i).getVacancyModel().getURL().isEmpty())
-            {
-                ((FoundVacanciesActivity) getActivity()).ReadWebsiteAsync(i, FragmentEnum.MAP);
-            }
-        }
+        ((FoundVacanciesActivity) getActivity()).ReadWebsiteAsync(Integer.parseInt(marker.getTitle().substring(0, 1)), FragmentEnum.MAP);
 
     }
 
@@ -100,14 +100,16 @@ public class MapFragment extends Fragment implements
         // Add Markers
         if(mapList != null)
         {
+            int i = 0;
             for(VacancyMapDetail item : mapList)
             {
+
                 LatLng latLng = convertAddressToLongAndLat(item.getAddress());
                 if(latLng != null)
                 {
                     googleMap.addMarker(new MarkerOptions()
-                                    .title(item.getVacancyModel().getTitle().isEmpty() ? "No Title" : item.getVacancyModel().getTitle())
-                                    .snippet(item.getVacancyModel().getUndertitle().isEmpty() ? " " : item.getVacancyModel().getUndertitle())
+                                    .title(item.getVacancyModel().getTitle().isEmpty() ? "No Title" : i++ + " " + item.getVacancyModel().getTitle())
+                                    .snippet(item.getVacancyModel().getUndertitle().isEmpty() ? " " : item.getVacancyModel().getUndertitle() + "\n" + item.getVacancyModel().getDetails())
                                     .position(latLng)
                     );
                 }
@@ -139,4 +141,25 @@ public class MapFragment extends Fragment implements
         return latLng;
     }
 
+    @Override
+    public boolean onMyLocationButtonClick() {
+        if(googleMap.getMyLocation() == null)
+        {
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(getView().getContext());
+            dlgAlert.setTitle("GPS not enabled!");
+            dlgAlert.setMessage("Please enable your GPS");
+            dlgAlert.setPositiveButton("OK", null);
+            dlgAlert.setCancelable(true);
+            dlgAlert.create().show();
+            return false;
+        }
+        else
+        {
+            Location loc = googleMap.getMyLocation();
+            LatLng latLng = new LatLng(loc.getLatitude(), loc.getLongitude());
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+            Toast.makeText(getView().getContext(), "Updating Position", Toast.LENGTH_SHORT);
+        }
+        return true;
+    }
 }
