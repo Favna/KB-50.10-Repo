@@ -49,6 +49,8 @@ public class DetailActivity extends AppCompatActivity {
         setViewText(this.model);
 
         telefoon = (Button) findViewById(R.id.btn_call);
+        if(model.getTelefoon().isEmpty())
+            telefoon.setEnabled(false);
     }
 
     private void setViewText(VacancyDetailModel model) {
@@ -64,9 +66,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void call(View v) {
-        if(model.getTelefoon().isEmpty())
-            telefoon.setEnabled(false);
-
         Intent intentCall = new Intent(Intent.ACTION_DIAL);
         intentCall.setData(Uri.parse("tel:" + model.getTelefoon()));
         startActivity(intentCall);

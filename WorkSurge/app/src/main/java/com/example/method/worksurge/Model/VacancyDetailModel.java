@@ -14,7 +14,7 @@ public class VacancyDetailModel implements Parcelable {
     private String Detail;
     private String Company;
     private List<String> Meta;
-    private String Telefoon;
+    private String Telefoon = "";
     private String Url;
 
     public VacancyDetailModel() {}
