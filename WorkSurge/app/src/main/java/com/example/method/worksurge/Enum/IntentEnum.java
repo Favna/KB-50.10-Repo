@@ -6,6 +6,7 @@ package com.example.method.worksurge.Enum;
 public enum IntentEnum {
     FOUND_SINGLE_VACANCY,
     FOUND_MULTIPLE_VACANCIES,
+    FOUND_MULTIPLE_MAP_VACANCIES,
     DECISION,
     CONTEXT,
 };

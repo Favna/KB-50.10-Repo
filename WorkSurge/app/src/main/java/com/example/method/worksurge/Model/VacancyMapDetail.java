@@ -21,6 +21,7 @@ public class VacancyMapDetail implements Parcelable{
     public VacancyMapDetail (Parcel in)
     {
         this.address = in.readString();
+        this.vacancyModel = in.readParcelable(VacancyModel.class.getClassLoader());
     }
 
     public VacancyModel getVacancyModel() {
@@ -63,10 +64,12 @@ public class VacancyMapDetail implements Parcelable{
     @Override
     public void writeToParcel (Parcel dest, int flags)
     {
-        dest.writeString (address);
+        dest.writeString (this.address);
+        dest.writeParcelable(this.vacancyModel, flags);
     }
 
     public void readFromParcel(Parcel in) {
-        address = in.readString();
+        this.address = in.readString();
+        this.vacancyModel = in.readParcelable(VacancyModel.class.getClassLoader());
     }
 }

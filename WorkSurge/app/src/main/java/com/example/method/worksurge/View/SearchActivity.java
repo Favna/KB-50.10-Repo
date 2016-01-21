@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.example.method.worksurge.Enum.FragmentEnum;
 import com.example.method.worksurge.Enum.IntentEnum;
 import com.example.method.worksurge.Location.LocationService;
+import com.example.method.worksurge.Model.VacancyDetailModel;
+import com.example.method.worksurge.Model.VacancyMapDetail;
 import com.example.method.worksurge.Model.VacancyModel;
 import com.example.method.worksurge.R;
 import com.example.method.worksurge.WebsiteConnector.WebsiteConnector;
@@ -38,7 +40,8 @@ public class SearchActivity extends AppCompatActivity {
     private WebsiteConnector wc = null;
     private FragmentEnum chosen = FragmentEnum.LIST;
     private LocationManager locManager;
-    protected List<VacancyModel> list = null;
+    private List<VacancyModel> list = null;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -51,6 +54,7 @@ public class SearchActivity extends AppCompatActivity {
         wc = new WebsiteConnector();
 
         locManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        dialog = new ProgressDialog(SearchActivity.this);
     }
 
     @Override
@@ -122,9 +126,11 @@ public class SearchActivity extends AppCompatActivity {
             String location = locService.getLocationAddress();
             String activityChoice = "";
 
-            new ReadWebsiteAsync(this.getApplicationContext(), SearchActivity.this).execute(
+            new ReadWebsiteAsync(this.getApplicationContext()).execute(
                     new UserParam(textSearchBox.getText().toString(), radius, location)
             );
+
+            new ReadWebsiteMapAsync(this.getApplicationContext()).execute();
         }
         else
         {
@@ -163,11 +169,9 @@ public class SearchActivity extends AppCompatActivity {
 
     private class ReadWebsiteAsync extends AsyncTask<UserParam, Void, Boolean> {
         private Context context;
-        private ProgressDialog dialog;
 
-        private ReadWebsiteAsync(Context context, SearchActivity activity) {
+        private ReadWebsiteAsync(Context context) {
             this.context = context;
-            dialog = new ProgressDialog(activity);
         }
 
         @Override
@@ -178,9 +182,6 @@ public class SearchActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if(dialog.isShowing())
-                dialog.dismiss();
-
             if(result)
             {
                 if(list == null ? true : list.size() == 0)
@@ -188,11 +189,6 @@ public class SearchActivity extends AppCompatActivity {
                     Toast.makeText(context, getResources().getString(R.string.no_vacancy), Toast.LENGTH_LONG).show();
                     return;
                 }
-                Intent iFoundVacanciesActivity = new Intent(context, FoundVacanciesActivity.class);
-                iFoundVacanciesActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                iFoundVacanciesActivity.putParcelableArrayListExtra(IntentEnum.FOUND_MULTIPLE_VACANCIES.toString(), (ArrayList<VacancyModel>) list);
-                iFoundVacanciesActivity.putExtra(IntentEnum.DECISION.toString(), chosen);
-                context.startActivity(iFoundVacanciesActivity);
             }
             else
             {
@@ -209,6 +205,49 @@ public class SearchActivity extends AppCompatActivity {
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
         }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
+
+    private class ReadWebsiteMapAsync extends AsyncTask<String, Void, Boolean> {
+        private Context context;
+        private List<VacancyMapDetail> model = new ArrayList<VacancyMapDetail>();
+
+        private ReadWebsiteMapAsync(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            model = wc.readWebsiteMap(list);
+            return true; // Return false if reading is unsuccesful
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(dialog.isShowing())
+                dialog.dismiss();
+
+            if(!result)
+            {
+                Toast.makeText(context, getResources().getString(R.string.no_connection), Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Intent iFoundVacanciesActivity = new Intent(context, FoundVacanciesActivity.class);
+                iFoundVacanciesActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                iFoundVacanciesActivity.putParcelableArrayListExtra(IntentEnum.FOUND_MULTIPLE_VACANCIES.toString(), (ArrayList<VacancyModel>) list);
+                iFoundVacanciesActivity.putParcelableArrayListExtra(IntentEnum.FOUND_MULTIPLE_MAP_VACANCIES.toString(), (ArrayList<VacancyMapDetail>) model);
+                iFoundVacanciesActivity.putExtra(IntentEnum.DECISION.toString(), chosen);
+                context.startActivity(iFoundVacanciesActivity);
+            }
+
+
+        }
+
+        @Override
+        protected void onPreExecute() {}
 
         @Override
         protected void onProgressUpdate(Void... values) {}

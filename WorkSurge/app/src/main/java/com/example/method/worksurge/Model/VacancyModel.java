@@ -7,9 +7,9 @@ import android.os.Parcelable;
  * Created by Method on 06/01/2016.
  */
 public class VacancyModel implements Parcelable{
-    private String Title;
-    private String Undertitle;
-    private String Details;
+    private String Title = "";
+    private String Undertitle = "";
+    private String Details = "";
     private String URL = "google";
 
     public VacancyModel() {}

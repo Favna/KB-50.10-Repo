@@ -1,6 +1,7 @@
 package com.example.method.worksurge.View;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -15,6 +16,8 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.Toast;
 
+import com.example.method.worksurge.Enum.FragmentEnum;
+import com.example.method.worksurge.Enum.IntentEnum;
 import com.example.method.worksurge.Model.VacancyDetailModel;
 import com.example.method.worksurge.Model.VacancyMapDetail;
 import com.example.method.worksurge.R;
@@ -79,27 +82,20 @@ public class MapFragment extends Fragment implements
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(getContext(), "Info window clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    // Initialize
-    public void init()
-    {
-        if(((FoundVacanciesActivity) getActivity()).checkConnectivity())
+        for(int i = 0; i < mapList.size(); i++)
         {
-            wc = new WebsiteConnector();
-            new ReadWebsiteAsync(view.getContext().getApplicationContext()).execute();
-        }
-        else
-        {
-            Toast.makeText(getContext(), getResources().getString(R.string.no_connection), Toast.LENGTH_LONG).show();
+            if(mapList.get(i).getVacancyModel().getUndertitle().equals(marker.getSnippet()) && mapList.get(i).getVacancyModel().getTitle().equals(marker.getTitle())
+                    && !mapList.get(i).getVacancyModel().getURL().isEmpty())
+            {
+                ((FoundVacanciesActivity) getActivity()).ReadWebsiteAsync(i, FragmentEnum.MAP);
+            }
         }
 
     }
 
     private void addMarkers(GoogleMap googleMap)
     {
-        init();
+        mapList = ((FoundVacanciesActivity) getActivity()).getVacancyMapList();
 
         // Add Markers
         if(mapList != null)
@@ -107,20 +103,16 @@ public class MapFragment extends Fragment implements
             for(VacancyMapDetail item : mapList)
             {
                 LatLng latLng = convertAddressToLongAndLat(item.getAddress());
-                googleMap.addMarker(new MarkerOptions()
-                                .title(item.getVacancyModel().getTitle())
-                                .snippet(item.getVacancyModel().getUndertitle())
-                                .position(latLng)
-                );
-
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+                if(latLng != null)
+                {
+                    googleMap.addMarker(new MarkerOptions()
+                                    .title(item.getVacancyModel().getTitle().isEmpty() ? "No Title" : item.getVacancyModel().getTitle())
+                                    .snippet(item.getVacancyModel().getUndertitle().isEmpty() ? " " : item.getVacancyModel().getUndertitle())
+                                    .position(latLng)
+                    );
+                }
             }
         }
-
-        googleMap.addMarker(new MarkerOptions()
-                .title("Test")
-                .snippet("Testtest g rTest")
-                .position(new LatLng(52.067075, 4.32)));
     }
 
     // Convert Address to long and lat(Google: LatLng)
@@ -145,41 +137,6 @@ public class MapFragment extends Fragment implements
         }
 
         return latLng;
-    }
-
-    private class ReadWebsiteAsync extends AsyncTask<String, Void, Boolean> {
-        private Context context;
-        private List<VacancyMapDetail> model = new ArrayList<VacancyMapDetail>();
-
-        private ReadWebsiteAsync(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            VacancyDetailModel test = new VacancyDetailModel();
-            mapList = wc.readWebsiteMap(((FoundVacanciesActivity) getActivity()).getVacancyList());
-            return true; // Return false if reading is unsuccesful
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if(!result)
-            {
-                Toast.makeText(context, getResources().getString(R.string.no_connection), Toast.LENGTH_LONG).show();
-            }
-            else
-            {
-                // Add Markers
-                // addMarkers(googleMap);
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {}
-
-        @Override
-        protected void onProgressUpdate(Void... values) {}
     }
 
 }

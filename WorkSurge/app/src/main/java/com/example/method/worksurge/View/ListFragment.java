@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.method.worksurge.Enum.FragmentEnum;
 import com.example.method.worksurge.Enum.IntentEnum;
 import com.example.method.worksurge.Model.VacancyDetailModel;
 import com.example.method.worksurge.Model.VacancyModel;
@@ -36,7 +37,6 @@ public class ListFragment extends Fragment {
 
     private View view;
     private ListView liv_vacancy;
-    private WebsiteConnector wc = null;
     private int save = -1;
     private String itemValue;
 
@@ -99,10 +99,7 @@ public class ListFragment extends Fragment {
 
                     if(((FoundVacanciesActivity) getActivity()).checkConnectivity())
                     {
-                        wc = new WebsiteConnector();
-                        new ReadWebsiteAsync(view.getContext().getApplicationContext(), ((FoundVacanciesActivity) getActivity())).execute(
-                                list.get(itemPosition).getURL()
-                        );
+                        ((FoundVacanciesActivity) getActivity()).ReadWebsiteAsync(itemPosition, FragmentEnum.LIST);
                     }
                     else
                     {
@@ -115,64 +112,5 @@ public class ListFragment extends Fragment {
         {
             Toast.makeText(view.getContext(), getResources().getString(R.string.error_unexpected), Toast.LENGTH_LONG).show();
         }
-    }
-
-    private class ReadWebsiteAsync extends AsyncTask<String, Void, Boolean> {
-        private Context context;
-        private ProgressDialog dialog;
-        private String[] params;
-        private VacancyDetailModel model = new VacancyDetailModel();
-
-        private ReadWebsiteAsync(Context context, FoundVacanciesActivity activity) {
-            this.context = context;
-            this.dialog = new ProgressDialog(activity);
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            this.params = params;
-            VacancyDetailModel test = new VacancyDetailModel();
-            model = wc.readWebsite(params[0]);
-            return true; // Return false if reading is unsuccesful
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if(dialog.isShowing())
-                dialog.dismiss();
-
-            if(result)
-            {
-                if(model != null ? model.getTitle().isEmpty() : false)
-                {
-                    Toast.makeText(context, getResources().getString(R.string.error_unexpected), Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                model.setUrl(params[0]);
-
-                Intent iDetailActivity = new Intent(view.getContext(), DetailActivity.class);
-                iDetailActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                iDetailActivity.putExtra(IntentEnum.FOUND_SINGLE_VACANCY.toString(), model);
-                view.getContext().startActivity(iDetailActivity);
-            }
-            else
-            {
-                Toast.makeText(context, getResources().getString(R.string.no_connection), Toast.LENGTH_LONG).show();
-            }
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            dialog.setMessage(getResources().getString(R.string.loading));
-            dialog.setIndeterminate(true);
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.show();
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {}
     }
 }
