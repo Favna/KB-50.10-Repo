@@ -45,8 +45,11 @@
     <string name="map_not_initialized">Could not load the map</string>
 
     <!-- Favorite Activity -->
-    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="title_activity_favorite">Favorites</string>
     <string name="no_favorite">Nothing to show! \n Please favorite something first.</string>
+    <string name="delete">Delete</string>
+    <string name="item_deleted">Favorite Deleted</string>
+
     <!-- About Activity -->
     <string name="title_activity_about">AboutActivity</string>
 
