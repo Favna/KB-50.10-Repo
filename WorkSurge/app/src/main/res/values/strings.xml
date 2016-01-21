@@ -54,7 +54,7 @@
     <string name="title_activity_about">AboutActivity</string>
 
     <!-- Settings Activity -->
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="title_save_email">SaveEmailActivity</string>
     <string name="filler_save_email">Enter an email addres, if there is already an email addres it will show the email addres</string>
     <string name="hint_save_email">Email Addres</string>

@@ -96,7 +96,7 @@ public class MapFragment extends Fragment implements
     private void addMarkers(GoogleMap googleMap)
     {
         mapList = ((FoundVacanciesActivity) getActivity()).getVacancyMapList();
-
+        System.out.println("MapList: " + mapList.size());
         // Add Markers
         if(mapList != null)
         {

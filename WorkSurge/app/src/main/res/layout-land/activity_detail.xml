@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="center_horizontal"
+        android:background="@drawable/text_underline"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:text="@string/txt_title"
+        android:id="@+id/txtCustomTitle"
+        />
+
+    <ImageView
+        android:layout_width="92dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_account_balance_24dp"
+        android:id="@+id/imageView"
+        android:maxHeight="200dp"
+        android:maxWidth="200dp"
+        android:layout_weight="0.14" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/txt_undertitle"
+        android:id="@+id/txtCustomMeta"
+        />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/txt_details"
+        android:id="@+id/txtCustomDetails"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/txt_url"
+        android:id="@+id/txtCustomCompany" />
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:weightSum="1"
+        android:layout_margin="10dp">
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_call"
+            android:onClick="call"
+            android:background="?attr/colorPrimary"
+            android:id="@+id/btn_call"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="5" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_email"
+            android:id="@+id/btn_email"
+            android:onClick="email"
+            android:layout_marginLeft="10dp"
+            android:background="?attr/colorPrimary"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="5" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btnFavorite"
+            android:id="@+id/btnFavorite"
+            android:onClick="setFavorite"
+            android:layout_marginLeft="10dp"
+            android:background="?attr/colorPrimary"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="5" />
+    </TableRow>
+
+</LinearLayout>
